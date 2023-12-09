@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
+import Link from 'next/link';
 import Input from "@/components/input";
 import Button from "@/components/button";
 
@@ -56,9 +57,7 @@ const Login = () => {
           {/* Link to the registration page */}
           <small className="text-zinc-300">
             Don&apos;t have an account?{" "}
-            <a className="text-primary hover:underline" href="/register">
-              Register
-            </a>
+            <Link className="text-primary hover:underline" href="/register">Register</Link>
           </small>
         </div>
       </div>

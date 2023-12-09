@@ -8,7 +8,7 @@ import Button from "@/components/button";
 const Register = () => {
     // State to manage user registration data
     const [data, setData] = useState({
-      email: "",
+      name: "",
       username: "",
       password: "",
     });
@@ -38,10 +38,9 @@ const Register = () => {
           </h1>
           {/* Input fields for username, password, and email */}
           <Input
-            placeholder="Enter the email..."
-            type="email"
-            value={data.email}
-            onChange={handleDataChange("email")}
+            placeholder="Enter the your name..."
+            value={data.name}
+            onChange={handleDataChange("name")}
           />
           <Input
             placeholder="Enter the username..."

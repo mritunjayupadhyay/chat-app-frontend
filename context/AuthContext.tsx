@@ -14,7 +14,7 @@ const AuthContext = createContext<{
   token: string | null;
   login: (data: { username: string; password: string }) => Promise<void>;
   register: (data: {
-    email: string;
+    name: string;
     username: string;
     password: string;
   }) => Promise<void>;
@@ -59,7 +59,7 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   // Function to handle user registration
   const register = async (data: {
-    email: string;
+    name: string;
     username: string;
     password: string;
   }) => {
@@ -76,19 +76,10 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   // Function to handle user logout
   const logout = async () => {
-    await requestHandler(
-      async () => await logoutUser(),
-      setIsLoading,
-      (res) => {
-        const { data } = res;
-        console.log("success", data);
-        setUser(null);
-        setToken(null);
-        LocalStorage.clear(); // Clear local storage on logout
-        router.replace("/chat")// Redirect to the login page after successful logout
-      },
-      alert // Display error alerts on request failure
-    );
+    setUser(null);
+    setToken(null);
+    LocalStorage.clear(); // Clear local storage on logout
+    router.replace("/chat")// Redirect to the login page after successful logout
   };
 
   // Check for saved user and token in local storage during component initialization

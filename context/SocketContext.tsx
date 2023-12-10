@@ -1,3 +1,4 @@
+"use client"
 /* eslint-disable react-refresh/only-export-components */
 import { LocalStorage } from "@/utils/LocalStorage.utils";
 import React, { createContext, useContext, useEffect, useState } from "react";

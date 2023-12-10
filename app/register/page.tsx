@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Link from 'next/link'
 import { useAuth } from "@/context/AuthContext";
 import Input from "@/components/input";
-import Button from "@/components/button";
+import {Button} from "@/components/button";
 
 const Register = () => {
     // State to manage user registration data

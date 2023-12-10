@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import Link from 'next/link';
 import Input from "@/components/input";
-import Button from "@/components/button";
+import {Button} from "@/components/button";
 
 const Login = () => {
     // State to manage input data (username and password)

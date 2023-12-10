@@ -66,4 +66,21 @@ export const classes = {
     mt-1.5 self-end text-[10px] inline-flex items-center
     ${isOwnMessage ? "text-zinc-50" : "text-zinc-400"}
     `,
+    addChatModalSwitchContainer: (isGroupChat: boolean) => cntl`
+    relative outline outline-[1px] outline-white inline-flex 
+    h-6 w-11 flex-shrink-0 cursor-pointer rounded-full 
+    border-2 border-transparent transition-colors duration-200 
+    ease-in-out focus:ring-0
+    ${isGroupChat ? "bg-secondary" : "bg-zinc-200"}
+    `,
+    addChatModalSwitch: (isGroupChat: boolean) => cntl`
+    pointer-events-none inline-block h-5 w-5 transform 
+    rounded-full shadow ring-0 transition duration-200 
+    ease-in-out
+    ${isGroupChat ? "translate-x-5 bg-success" : "translate-x-0 bg-white"}
+    `,
+    addChatModalSwitchLabel: (isGroupChat: boolean) => cntl`
+    font-medium text-white
+    ${isGroupChat ? "" : "opacity-40"}
+    `
 }

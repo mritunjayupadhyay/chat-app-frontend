@@ -1,5 +1,4 @@
-"use client"
-/* eslint-disable react-refresh/only-export-components */
+"use client";
 import { LocalStorage } from "@/utils/LocalStorage.utils";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import socketio from "socket.io-client";

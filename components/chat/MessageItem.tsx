@@ -35,7 +35,7 @@ const MessageItem: React.FC<{
       >
         <img
           src={message.sender?.avatar?.url}
-          className={classes.messageItemContainer(!!isOwnMessage)}
+          className={classes.messageItemImg(!!isOwnMessage)}
         />
         <div
           className={classes.messageItemGroupChatContainer(!!isOwnMessage)}

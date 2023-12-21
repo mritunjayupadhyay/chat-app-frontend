@@ -10,6 +10,9 @@ import { useAuth } from "../../context/AuthContext";
 import { ChatListItemInterface } from "@/interfaces/chat.interface";
 import { classes } from "./chat.style";
 import { getChatObjectMetadata } from "@/utils/chat.utils";
+import GroupChatDetailsModal from "./GroupChatDetailsModal";
+import { requestHandler } from "@/utils/requestHandler.utils";
+import { deleteOneOnOneChat } from "@/api/chat.api";
 
 const ChatItem: React.FC<{
   chat: ChatListItemInterface;
@@ -25,32 +28,32 @@ const ChatItem: React.FC<{
   // Define an asynchronous function named 'deleteChat'.
   const deleteChat = async () => {
     console.log("delete chat");
-    // await requestHandler(
-    //   //  A callback function that performs the deletion of a one-on-one chat by its ID.
-    //   async () => await deleteOneOnOneChat(chat._id),
-    //   null,
-    //   // A callback function to be executed on success. It will call 'onChatDelete'
-    //   // function with the chat's ID as its parameter.
-    //   () => {
-    //     onChatDelete(chat._id);
-    //   },
-    //   // The 'alert' function (likely to display error messages to the user.
-    //   alert
-    // );
+    await requestHandler(
+      //  A callback function that performs the deletion of a one-on-one chat by its ID.
+      async () => await deleteOneOnOneChat(chat._id),
+      null,
+      // A callback function to be executed on success. It will call 'onChatDelete'
+      // function with the chat's ID as its parameter.
+      () => {
+        onChatDelete(chat._id);
+      },
+      // The 'alert' function (likely to display error messages to the user.
+      alert
+    );
   };
 
   if (!chat) return;
 
   return (
     <>
-      {/* <GroupChatDetailsModal
+      <GroupChatDetailsModal
         open={openGroupInfo}
         onClose={() => {
           setOpenGroupInfo(false);
         }}
         chatId={chat._id}
         onGroupDelete={onChatDelete}
-      /> */}
+      />
       <div
         role="button"
         onClick={() => onClick(chat)}

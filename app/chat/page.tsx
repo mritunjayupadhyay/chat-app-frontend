@@ -25,6 +25,7 @@ import { requestHandler } from '@/utils/requestHandler.utils'
 
 import { getChatMessages, getUserChats, sendMessage } from '../../api/chat.api'
 import AddChatModal from '@/components/chat/AddChatModal'
+import { upload } from '@/api/upload.api'
 
 const CONNECTED_EVENT = 'connected'
 const DISCONNECT_EVENT = 'disconnect'
@@ -77,6 +78,7 @@ const ChatPage = () => {
     const [localSearchQuery, setLocalSearchQuery] = useState('') // For local search functionality
 
     const [attachedFiles, setAttachedFiles] = useState<File[]>([]) // To store files attached to messages
+    const [attachedFilesUrl, setAttachedFilesUrl] = useState<string[]>([]) // To store files attached to messages
 
     /**
      *  A  function to update the last message of a specified chat to update the chat list
@@ -176,6 +178,32 @@ const ChatPage = () => {
             // If there's an error during the message sending process, raise an alert
             alert
         )
+    }
+
+    const handleAttachmentClick = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            const urls = await Promise.all(Array.from(e.target.files).map(async (file) => {
+                const res = await upload({ key: currentChat.current?._id || '' })
+                const { data, success } = res.data;
+                if (success !== true) return "";
+                const uploadToR2Response = await fetch(data?.presignedUrl, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': file.type
+                    },
+                    body: file
+                });
+                console.log("uploadToR2Response", uploadToR2Response);
+                const url = await uploadToR2Response.text();
+                return url;
+            })) 
+                 
+            console.log("urls", urls); 
+            // setAttachedFilesUrl(urls)
+            setAttachedFiles(
+                Array.from(e.target.files)
+            )
+        }
     }
 
     const handleOnMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -588,7 +616,7 @@ const ChatPage = () => {
                                                 />
                                             </div>
                                         )
-                                        
+
                                     })}
                                 </div>
                             ) : null}
@@ -600,13 +628,7 @@ const ChatPage = () => {
                                     value=""
                                     multiple
                                     max={5}
-                                    onChange={(e) => {
-                                        if (e.target.files) {
-                                            setAttachedFiles(
-                                                Array.from(e.target.files)
-                                            )
-                                        }
-                                    }}
+                                    onChange={handleAttachmentClick}
                                 />
                                 <label
                                     htmlFor="attachments"

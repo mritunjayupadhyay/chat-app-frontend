@@ -418,7 +418,7 @@ const ChatPage = () => {
             />
             <div className="w-full justify-between items-stretch h-screen flex flex-shrink-0 overflow-hidden">
                 <div className="bg-bgPrimary w-1/3 relative ring-white overflow-y-auto">
-                <div className="p-4 sticky top-0 bg-bgSecondary z-20 flex justify-between items-center w-full border-b-[0.1px] border-secondary">
+                <div className="p-4 sticky top-0 bg-bgSecondary z-20 flex justify-between items-center w-full border-secondary">
                                 <div className="flex justify-start items-center w-max gap-3">
                                 <img
                                             className="h-14 w-14 rounded-full flex flex-shrink-0 object-cover"
@@ -529,7 +529,7 @@ const ChatPage = () => {
                 <div className="w-2/3 border-l-[0.1px] border-secondary">
                     {currentChat.current && currentChat.current?._id ? (
                         <>
-                            <div className="p-4 sticky top-0 bg-bgSecondary z-20 flex justify-between items-center w-full border-b-[0.1px] border-secondary">
+                            <div className="p-4 sticky top-0 bg-bgSecondary z-20 flex justify-between items-center w-full border-secondary">
                                 <div className="flex justify-start items-center w-max gap-3">
                                     {currentChat.current.isGroupChat ? (
                                         <div className="w-12 relative h-12 flex-shrink-0 flex justify-start items-center flex-nowrap">

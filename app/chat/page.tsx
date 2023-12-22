@@ -181,28 +181,34 @@ const ChatPage = () => {
     }
 
     const handleAttachmentClick = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-            const urls = await Promise.all(Array.from(e.target.files).map(async (file) => {
-                const res = await upload({ key: currentChat.current?._id || '' })
-                const { data, success } = res.data;
-                if (success !== true) return "";
-                const uploadToR2Response = await fetch(data?.presignedUrl, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': file.type
-                    },
-                    body: file
-                });
-                console.log("uploadToR2Response", uploadToR2Response);
-                const url = await uploadToR2Response.text();
-                return url;
-            })) 
-                 
-            console.log("urls", urls); 
-            // setAttachedFilesUrl(urls)
-            setAttachedFiles(
-                Array.from(e.target.files)
-            )
+        try {
+            if (e.target.files) {
+                const urls = await Promise.all(Array.from(e.target.files).map(async (file) => {
+                    const res = await upload({ name: file.name, type: file.type })
+                    const { data: {presignedUrl, objectKey}, success } = res.data;
+                    if (success !== true) return "";
+                    // To save images.
+                    const uploadToR2Response = await fetch(presignedUrl, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': file.type 
+                        },
+                        body: file
+                    });
+                    console.log("uploadToR2Response", uploadToR2Response);
+                    const url = `${process.env.NEXT_PUBLIC_R2_BUCKET_DOMAIN}/${objectKey}`;
+                    console.log("url",file.name, url, objectKey);
+                    return url;
+                })) 
+                     
+                console.log("urls", urls); 
+                // setAttachedFilesUrl(urls)    
+                setAttachedFiles(
+                    Array.from(e.target.files)
+                )
+            }
+        } catch(e) {
+            console.log("error", e)
         }
     }
 

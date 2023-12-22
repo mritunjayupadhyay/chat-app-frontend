@@ -8,7 +8,11 @@ const apiClient = axios.create({
 })
 
 // API functions for different actions
-const upload = (data: { key: string }) => {
+const upload = (args: { name: string, type: string }) => {
+    const data = {
+        fileName: args.name,
+		fileType: args.type
+    }
     return apiClient.post('/uploads/signed_url', data)
 }
 

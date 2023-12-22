@@ -662,7 +662,7 @@ const ChatPage = () => {
                                 />
                                 <label
                                     htmlFor="attachments"
-                                    className="p-4 rounded-full bg-dark hover:bg-secondary"
+                                    className="p-4 rounded-full bg-bgInput hover:bg-bgPrimary"
                                 >
                                     <PaperClipIcon className="w-6 h-6" />
                                 </label>
@@ -683,7 +683,7 @@ const ChatPage = () => {
                                     disabled={
                                         !message && attachedFilesUrl.length <= 0
                                     }
-                                    className="p-4 rounded-full bg-dark hover:bg-secondary disabled:opacity-50"
+                                    className="p-4 rounded-full bg-bgInput hover:bg-bgPrimary disabled:opacity-50"
                                 >
                                     <PaperAirplaneIcon className="w-6 h-6" />
                                 </button>

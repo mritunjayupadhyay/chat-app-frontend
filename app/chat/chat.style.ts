@@ -13,7 +13,7 @@ const classes = {
         : ""
     }`,
     messageWindow: (count: number) => cntl`
-    p-8 overflow-y-auto flex flex-col-reverse gap-6 w-full
+    p-8 overflow-y-auto flex flex-col-reverse gap-6 w-full bg-bgPrimary
     ${
         count > 0
                     ? "h-[calc(100vh-336px)]"

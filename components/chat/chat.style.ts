@@ -14,9 +14,9 @@ export const classes = {
     chatItemButtonContainer: (unreadCount: number, isActive: boolean) => cntl`
     group p-4 my-2 flex justify-between gap-3
     items-start cursor-pointer rounded-3xl 
-    hover:bg-secondary
+    hover:bg-bgSecondary
     ${
-        isActive ? "border-[1px] border-zinc-500 bg-secondary" : ""
+        isActive ? "border-[1px] border-zinc-500 bg-bgSecondary" : "bg-bgInput"
     }
     ${unreadCount > 0
     ? "border-[1px] border-success bg-success/20 font-bold"
@@ -39,7 +39,7 @@ export const classes = {
     }
     `,
     messageItemContainer: (isOwnMessage: boolean) => cntl`
-    flex justify-start items-end gap-3 max-w-lg min-w-
+    flex justify-start items-end gap-3 max-w-[300px] min-w-
     ${isOwnMessage ? "ml-auto" : ""}
     `,
     messageItemImg: (isOwnMessage: boolean) => cntl`
@@ -49,8 +49,8 @@ export const classes = {
     messageItemGroupChatContainer: (isOwnMessage: boolean) => cntl`
     p-4 rounded-3xl flex flex-col
     ${isOwnMessage 
-        ? "order-1 rounded-br-none bg-primary" 
-        : "order-2 rounded-bl-none bg-secondary"
+        ? "order-1 rounded-br-none bg-bgMyMessage" 
+        : "order-2 rounded-bl-none bg-byIncomingMessage"
     }
     `,
     messageItemGroupChatText: (isEven: boolean) => cntl`

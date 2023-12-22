@@ -68,15 +68,12 @@ const getChatMessages = (chatId: string) => {
   return apiClient.get(`/messages/${chatId}`);
 };
 
-const sendMessage = (chatId: string, content: string, attachments: File[]) => {
-  const formData = new FormData();
-  if (content) {
-    formData.append("content", content);
+const sendMessage = (chatId: string, content: string, attachments: string[]) => {
+  const data = {
+    content: content,
+    attachments
   }
-  attachments?.map((file) => {
-    formData.append("attachments", file);
-  });
-  return apiClient.post(`/messages/${chatId}`, formData);
+  return apiClient.post(`/messages/${chatId}`, data);
 };
 
 // Export all the API functions

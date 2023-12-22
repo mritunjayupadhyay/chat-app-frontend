@@ -2,6 +2,7 @@
 import {
     PaperAirplaneIcon,
     PaperClipIcon,
+    UserPlusIcon,
     XCircleIcon,
 } from '@heroicons/react/20/solid'
 import React, { useEffect, useRef, useState } from 'react'
@@ -79,6 +80,7 @@ const ChatPage = () => {
 
     const [attachedFiles, setAttachedFiles] = useState<File[]>([]) // To store files attached to messages
     const [attachedFilesUrl, setAttachedFilesUrl] = useState<string[]>([]) // To store files attached to messages
+    console.log("attachedFiles", attachedFiles, attachedFilesUrl);
 
     /**
      *  A  function to update the last message of a specified chat to update the chat list
@@ -151,6 +153,7 @@ const ChatPage = () => {
 
     // Function to send a chat message
     const sendChatMessage = async () => {
+        console.log("sendChatMessage", message, attachedFilesUrl)
         // If no current chat ID exists or there's no socket connection, exit the function
         if (!currentChat.current?._id || !socket) return
 
@@ -164,13 +167,13 @@ const ChatPage = () => {
                 await sendMessage(
                     currentChat.current?._id || '', // Chat ID or empty string if not available
                     message, // Actual text message
-                    attachedFiles // Any attached files
+                    attachedFilesUrl // Any attached files
                 ),
             null,
             // On successful message sending, clear the message input and attached files, then update the UI
             (res) => {
                 setMessage('') // Clear the message input
-                setAttachedFiles([]) // Clear the list of attached files
+                setAttachedFilesUrl([]) // Clear the list of attached files
                 setMessages((prev) => [res.data, ...prev]) // Update messages in the UI
                 updateChatLastMessage(currentChat.current?._id || '', res.data) // Update the last message in the chat
             },
@@ -203,6 +206,7 @@ const ChatPage = () => {
                      
                 console.log("urls", urls); 
                 // setAttachedFilesUrl(urls)    
+                setAttachedFilesUrl(urls);
                 setAttachedFiles(
                     Array.from(e.target.files)
                 )
@@ -412,25 +416,46 @@ const ChatPage = () => {
                     getChats()
                 }}
             />
-            <div className="w-full justify-between items-stretch h-screen flex flex-shrink-0">
-                <div className="w-1/3 relative ring-white overflow-y-auto px-4">
-                    <div className="z-10 w-full sticky top-0 bg-dark py-4 flex justify-between items-center gap-4">
+            <div className="w-full justify-between items-stretch h-screen flex flex-shrink-0 overflow-hidden">
+                <div className="bg-bgPrimary w-1/3 relative ring-white overflow-y-auto">
+                <div className="p-4 sticky top-0 bg-bgSecondary z-20 flex justify-between items-center w-full border-b-[0.1px] border-secondary">
+                                <div className="flex justify-start items-center w-max gap-3">
+                                <img
+                                            className="h-14 w-14 rounded-full flex flex-shrink-0 object-cover"
+                                            src={user?.avatar.url}
+                                        />
+                                    <div>
+                                        <p className="font-bold">
+                                            {user?.username
+                                            }
+                                        </p>
+                                        <small className="text-zinc-400">
+                                        {user?.name
+                                            }
+                                        </small>
+                                    </div>
+                                </div>
+                                <button
+                            onClick={() => setOpenAddChat(true)}
+                            className="rounded-xl border-none bg-transparent text-white py-4 px-5 flex flex-shrink-0"
+                        >
+                            <UserPlusIcon className="h-6 w-6 text-white" />
+                        </button>
+                </div>
+                    <div className="bg-bgPrimary z-10 w-full sticky top-0 py-4 px-4 flex justify-between items-center gap-4">
                         <Input
-                            placeholder="Search user or group..."
+                            placeholder="Search or start new chat"
                             value={localSearchQuery}
                             onChange={(e) =>
                                 setLocalSearchQuery(
                                     e.target.value.toLowerCase()
                                 )
                             }
+                            className='py-3 px-4 rounded-md'
                         />
-                        <button
-                            onClick={() => setOpenAddChat(true)}
-                            className="rounded-xl border-none bg-primary text-white py-4 px-5 flex flex-shrink-0"
-                        >
-                            + Add chat
-                        </button>
+                        
                     </div>
+                    <div className='px-4'>
                     {loadingChats ? (
                         <div className="flex justify-center items-center h-[calc(100%-88px)]">
                             <Typing />
@@ -499,11 +524,12 @@ const ChatPage = () => {
                                 )
                             })
                     )}
+                    </div>
                 </div>
                 <div className="w-2/3 border-l-[0.1px] border-secondary">
                     {currentChat.current && currentChat.current?._id ? (
                         <>
-                            <div className="p-4 sticky top-0 bg-dark z-20 flex justify-between items-center w-full border-b-[0.1px] border-secondary">
+                            <div className="p-4 sticky top-0 bg-bgSecondary z-20 flex justify-between items-center w-full border-b-[0.1px] border-secondary">
                                 <div className="flex justify-start items-center w-max gap-3">
                                     {currentChat.current.isGroupChat ? (
                                         <div className="w-12 relative h-12 flex-shrink-0 flex justify-start items-center flex-nowrap">
@@ -589,9 +615,9 @@ const ChatPage = () => {
                                     </>
                                 )}
                             </div>
-                            {attachedFiles.length > 0 ? (
+                            {attachedFilesUrl.length > 0 ? (
                                 <div className="grid gap-4 grid-cols-5 p-4 justify-start max-w-fit">
-                                    {attachedFiles.map((file, i) => {
+                                    {attachedFilesUrl.map((fileUrl, i) => {
                                         return (
                                             <div
                                                 key={i}
@@ -600,8 +626,8 @@ const ChatPage = () => {
                                                 <div className="absolute inset-0 flex justify-center items-center w-full h-full bg-black/40 group-hover:opacity-100 opacity-0 transition-opacity ease-in-out duration-150">
                                                     <button
                                                         onClick={() => {
-                                                            setAttachedFiles(
-                                                                attachedFiles.filter(
+                                                            setAttachedFilesUrl(
+                                                                attachedFilesUrl.filter(
                                                                     (_, ind) =>
                                                                         ind !==
                                                                         i
@@ -615,9 +641,7 @@ const ChatPage = () => {
                                                 </div>
                                                 <img
                                                     className="h-full rounded-xl w-full object-cover"
-                                                    src={URL.createObjectURL(
-                                                        file
-                                                    )}
+                                                    src={fileUrl}
                                                     alt="attachment"
                                                 />
                                             </div>
@@ -626,7 +650,7 @@ const ChatPage = () => {
                                     })}
                                 </div>
                             ) : null}
-                            <div className="sticky top-full p-4 flex justify-between items-center w-full gap-2 border-t-[0.1px] border-secondary">
+                            <div className="sticky top-full p-4 flex justify-between items-center w-full gap-2 border-t-[0.1px] bg-bgSecondary border-secondary">
                                 <input
                                     hidden
                                     id="attachments"
@@ -652,11 +676,12 @@ const ChatPage = () => {
                                             sendChatMessage()
                                         }
                                     }}
+                                    className='bg-bgInput'
                                 />
                                 <button
                                     onClick={sendChatMessage}
                                     disabled={
-                                        !message && attachedFiles.length <= 0
+                                        !message && attachedFilesUrl.length <= 0
                                     }
                                     className="p-4 rounded-full bg-dark hover:bg-secondary disabled:opacity-50"
                                 >

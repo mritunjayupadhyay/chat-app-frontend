@@ -4,6 +4,7 @@ import {
     PaperClipIcon,
     UserPlusIcon,
     XCircleIcon,
+    ArrowLeftIcon,
 } from '@heroicons/react/20/solid'
 import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
@@ -77,6 +78,7 @@ const ChatPage = () => {
 
     const [message, setMessage] = useState('') // To store the currently typed message
     const [localSearchQuery, setLocalSearchQuery] = useState('') // For local search functionality
+    const [isMessageWindowOpen, setMessageWindowOpen] = useState(false) // To track if the message window is open
 
     const [attachedFiles, setAttachedFiles] = useState<File[]>([]) // To store files attached to messages
     const [attachedFilesUrl, setAttachedFilesUrl] = useState<string[]>([]) // To store files attached to messages
@@ -145,6 +147,7 @@ const ChatPage = () => {
             (res) => {
                 const { data } = res
                 setMessages(data || [])
+                setMessageWindowOpen(true)
             },
             // Display any error alerts if they occur during the fetch
             alert
@@ -425,7 +428,7 @@ const ChatPage = () => {
                 }}
             />
             <div className="w-full justify-between items-stretch h-screen flex flex-shrink-0 overflow-hidden">
-                <div className="bg-bgPrimary w-1/3 relative ring-white overflow-y-auto">
+                <div className={classes.chatListContainer(isMessageWindowOpen)}>
                     <div className="p-4 sticky top-0 bg-bgSecondary z-20 flex justify-between items-center w-full border-secondary">
                         <div className="flex justify-start items-center w-max gap-3">
                             <img
@@ -439,6 +442,7 @@ const ChatPage = () => {
                                 </small>
                             </div>
                         </div>
+
                         <button
                             onClick={() => setOpenAddChat(true)}
                             className="rounded-xl border-none bg-transparent text-white py-4 px-5 flex flex-shrink-0"
@@ -490,11 +494,6 @@ const ChatPage = () => {
                                                 ).length
                                             }
                                             onClick={(chat) => {
-                                                console.log(
-                                                    'chat',
-                                                    chat,
-                                                    currentChat
-                                                )
                                                 if (
                                                     currentChat.current?._id &&
                                                     currentChat.current?._id ===
@@ -533,11 +532,25 @@ const ChatPage = () => {
                         )}
                     </div>
                 </div>
-                <div className="w-2/3 border-l-[0.1px] border-secondary">
+                <div
+                    className={classes.messageWindowContainer(
+                        isMessageWindowOpen
+                    )}
+                >
                     {currentChat.current && currentChat.current?._id ? (
                         <>
                             <div className="p-4 sticky top-0 bg-bgSecondary z-20 flex justify-between items-center w-full border-secondary">
                                 <div className="flex justify-start items-center w-max gap-3">
+                                    <button
+                                        onClick={() => {
+                                            currentChat.current = null
+                                            LocalStorage.remove('currentChat')
+                                            setMessageWindowOpen(false)
+                                        }}
+                                        className="rounded-xl border-none bg-transparent text-white flex flex-shrink-0"
+                                    >
+                                        <ArrowLeftIcon className="h-6 w-6 text-white" />
+                                    </button>
                                     {currentChat.current.isGroupChat ? (
                                         <div className="w-12 relative h-12 flex-shrink-0 flex justify-start items-center flex-nowrap">
                                             {currentChat.current.participants
@@ -672,9 +685,9 @@ const ChatPage = () => {
                                 />
                                 <label
                                     htmlFor="attachments"
-                                    className="p-4 rounded-full bg-bgInput hover:bg-bgPrimary"
+                                    className="p-2 sm:p-4 rounded-full bg-bgInput hover:bg-bgPrimary"
                                 >
-                                    <PaperClipIcon className="w-6 h-6" />
+                                    <PaperClipIcon className="w-5 h-5 sm:w-6 sm:h-6" />
                                 </label>
 
                                 <Input
@@ -693,9 +706,9 @@ const ChatPage = () => {
                                     disabled={
                                         !message && attachedFilesUrl.length <= 0
                                     }
-                                    className="p-4 rounded-full bg-bgInput hover:bg-bgPrimary disabled:opacity-50"
+                                    className="p-2 sm:p-4 rounded-full bg-bgInput hover:bg-bgPrimary disabled:opacity-50"
                                 >
-                                    <PaperAirplaneIcon className="w-6 h-6" />
+                                    <PaperAirplaneIcon className="w-5 h-5 sm:w-6 sm:h-6" />
                                 </button>
                             </div>
                         </>

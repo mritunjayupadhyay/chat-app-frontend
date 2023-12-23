@@ -39,7 +39,7 @@ export const classes = {
     }
     `,
     messageItemContainer: (isOwnMessage: boolean) => cntl`
-    flex justify-start items-end gap-3 max-w-[300px] min-w-
+    flex justify-start items-end gap-3 max-w-[220px] sm:max-w-[300px] min-w-
     ${isOwnMessage ? "ml-auto" : ""}
     `,
     messageItemImg: (isOwnMessage: boolean) => cntl`

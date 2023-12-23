@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useAuth } from "@/context/AuthContext";
 import Input from "@/components/input";
 import {Button} from "@/components/button";
+import { PaperClipIcon } from "@heroicons/react/20/solid";
 
 const Register = () => {
     // State to manage user registration data
@@ -28,6 +29,9 @@ const Register = () => {
   
     // Handle user registration
     const handleRegister = async () => await register(data);
+    const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+    }
   
     return (
       // Register form UI

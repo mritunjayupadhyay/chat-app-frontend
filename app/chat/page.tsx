@@ -39,6 +39,7 @@ const MESSAGE_RECEIVED_EVENT = 'messageReceived'
 const LEAVE_CHAT_EVENT = 'leaveChat'
 const UPDATE_GROUP_NAME_EVENT = 'updateGroupName'
 
+export const runtime = 'edge';
 const ChatPage = () => {
     const router = useRouter()
     const { token, user } = useAuth()

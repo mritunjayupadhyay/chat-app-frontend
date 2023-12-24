@@ -1,5 +1,4 @@
 import axios from 'axios'
-export const runtime = 'edge';
 // Create an Axios instance for API requests
 const apiClient = axios.create({
     baseURL: process.env.NEXT_PUBLIC_SEVER_API_URL,
@@ -8,6 +7,7 @@ const apiClient = axios.create({
 })
 
 // API functions for different actions
+const runtime = 'edge';
 const upload = (args: { name: string, type: string }) => {
     const data = {
         fileName: args.name,
@@ -16,4 +16,4 @@ const upload = (args: { name: string, type: string }) => {
     return apiClient.post('/uploads/signed_url', data)
 }
 
-export { upload }
+export { upload, runtime }

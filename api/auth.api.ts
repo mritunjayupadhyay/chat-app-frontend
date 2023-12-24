@@ -1,5 +1,5 @@
 import axios from 'axios'
-export const runtime = 'edge';
+const runtime = 'edge';
 // Create an Axios instance for API requests
 const apiClient = axios.create({
     baseURL: process.env.NEXT_PUBLIC_SEVER_API_URL,
@@ -26,4 +26,4 @@ const logoutUser = () => {
     return apiClient.get('/chats')
 }
 
-export { loginUser, registerUser, logoutUser }
+export { loginUser, registerUser, logoutUser, runtime }

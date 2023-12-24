@@ -5,6 +5,8 @@ import Link from 'next/link';
 import Input from "@/components/input";
 import {Button} from "@/components/button";
 
+
+export const runtime = 'edge';
 const Login = () => {
     // State to manage input data (username and password)
     const [data, setData] = useState({

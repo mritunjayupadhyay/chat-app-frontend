@@ -5,8 +5,10 @@ import { useAuth } from '@/context/AuthContext'
 import Input from '@/components/input'
 import { Button } from '@/components/button'
 import { PaperClipIcon } from '@heroicons/react/20/solid'
-import { upload } from '@/api/upload.api'
+import { upload } from '@/api/upload.api';
 
+
+export const runtime = 'edge';
 const Register = () => {
     // State to manage user registration data
     const [data, setData] = useState({

@@ -1,7 +1,6 @@
 // Import necessary modules and utilities
 import axios from "axios";
 import { LocalStorage } from "@/utils/LocalStorage.utils";
-export const runtime = 'edge';
 // Create an Axios instance for API requests
 const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_SEVER_API_URL,
@@ -76,6 +75,7 @@ const sendMessage = (chatId: string, content: string, attachments: string[]) => 
   return apiClient.post(`/messages/${chatId}`, data);
 };
 
+const runtime = 'edge';
 // Export all the API functions
 export {
   addParticipantToGroup,
@@ -90,4 +90,5 @@ export {
   removeParticipantFromGroup,
   sendMessage,
   updateGroupName,
+  runtime
 };

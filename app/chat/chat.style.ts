@@ -13,13 +13,23 @@ const classes = {
         : ""
     }`,
     messageWindow: (count: number) => cntl`
-    p-8 overflow-y-auto flex flex-col-reverse gap-6 w-full
+    p-8 overflow-y-auto flex flex-col-reverse gap-6 w-full bg-bgPrimary
     ${
         count > 0
                     ? "h-[calc(100vh-336px)]"
                     : "h-[calc(100vh-176px)]"
     }
-    `
+    `,
+    chatListContainer: (isMessageWindowOpen: boolean) => cntl`
+    bg-bgPrimary relative ring-white overflow-y-auto
+    w-full sm:w-1/3
+    ${isMessageWindowOpen ? "hidden sm:block" : ""}
+    `,
+    messageWindowContainer: (isMessageWindowOpen: boolean) => cntl`
+    border-l-[0.1px] border-secondary
+    w-full sm:w-2/3
+    ${isMessageWindowOpen ? "" : "hidden sm:block"}
+    `,
 }
 
 export { classes}

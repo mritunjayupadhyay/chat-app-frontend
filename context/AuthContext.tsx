@@ -17,6 +17,7 @@ const AuthContext = createContext<{
     name: string;
     username: string;
     password: string;
+    avatar?: string
   }) => Promise<void>;
   logout: () => Promise<void>;
 }>({
@@ -51,6 +52,7 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         setToken(data.accessToken);
         LocalStorage.set("user", data.user);
         LocalStorage.set("token", data.accessToken);
+        LocalStorage.remove("currentChat");
         router.replace("/chat") // Redirect to the chat page after successful login
       },
       alert // Display error alerts on request failure
@@ -62,6 +64,7 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     name: string;
     username: string;
     password: string;
+    avatar?: string
   }) => {
     await requestHandler(
       async () => await registerUser(data),

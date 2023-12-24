@@ -34,7 +34,7 @@ const MessageItem: React.FC<{
         className={classes.messageItemContainer(!!isOwnMessage)}
       >
         <img
-          src={message.sender?.avatar?.url}
+          src={message.sender?.avatar}
           className={classes.messageItemImg(!!isOwnMessage)}
         />
         <div
@@ -52,19 +52,19 @@ const MessageItem: React.FC<{
             <div
               className={classes.messageItemAttachmentContainer(message?.attachments?.length || 0, !!message.content)}
             >
-              {message.attachments?.map((file) => {
+              {message.attachments?.map((fileUrl) => {
                 return (
                   <div
-                    key={file._id}
+                    key={fileUrl}
                     className="group relative aspect-square rounded-xl overflow-hidden cursor-pointer"
                   >
                     <button
-                      onClick={() => setResizedImage(file.url)}
+                      onClick={() => setResizedImage(fileUrl)}
                       className="absolute inset-0 z-20 flex justify-center items-center w-full gap-2 h-full bg-black/60 group-hover:opacity-100 opacity-0 transition-opacity ease-in-out duration-150"
                     >
                       <MagnifyingGlassPlusIcon className="h-6 w-6 text-white" />
                       <a
-                        href={file.url}
+                        href={fileUrl}
                         download
                         onClick={(e) => e.stopPropagation()}
                       >
@@ -76,7 +76,7 @@ const MessageItem: React.FC<{
                     </button>
                     <img
                       className="h-full w-full object-cover"
-                      src={file.url}
+                      src={fileUrl}
                       alt="msg_img"
                     />
                   </div>

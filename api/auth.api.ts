@@ -15,7 +15,8 @@ const loginUser = (data: { username: string; password: string }) => {
 const registerUser = (data: {
     name: string
     password: string
-    username: string
+    username: string,
+    avatar?: string
 }) => {
     return apiClient.post('/users/register', data)
 }

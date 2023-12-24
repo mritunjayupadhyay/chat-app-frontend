@@ -43,3 +43,25 @@
   animation: bounce 0.4s ease-in-out infinite alternate;
   animation-delay: 0s;
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 8px;
+}
+ 
+/* Track */
+::-webkit-scrollbar-track {
+    background: #888;
+    border-radius: 5px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #202c33;
+    border-radius: 5px;
+}
+ 
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #2a3942;
+}

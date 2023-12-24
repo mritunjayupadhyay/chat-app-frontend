@@ -16,11 +16,7 @@ export interface ChatMessageInterface {
     sender: Pick<UserInterface, "_id" | "avatar" | "username">;
     content: string;
     chat: string;
-    attachments: {
-        url: string;
-        localPath: string;
-        _id: string;
-    }[];
+    attachments: string[];
     createdAt: string;
     updatedAt: string;
 }

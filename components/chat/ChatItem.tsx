@@ -12,7 +12,7 @@ import { classes } from "./chat.style";
 import { getChatObjectMetadata } from "@/utils/chat.utils";
 import GroupChatDetailsModal from "./GroupChatDetailsModal";
 import { requestHandler } from "@/utils/requestHandler.utils";
-import { deleteOneOnOneChat } from "@/api/chat.api";
+import { deleteOneOnOneChat } from "@/apihandler/chat.api";
 
 const ChatItem: React.FC<{
   chat: ChatListItemInterface;

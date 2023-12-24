@@ -25,9 +25,9 @@ import MessageItem from '@/components/chat/MessageItem'
 import { LocalStorage } from '@/utils/LocalStorage.utils'
 import { requestHandler } from '@/utils/requestHandler.utils'
 
-import { getChatMessages, getUserChats, sendMessage } from '../../api/chat.api'
+import { getChatMessages, getUserChats, sendMessage } from '../../apihandler/chat.api'
 import AddChatModal from '@/components/chat/AddChatModal'
-import { upload } from '@/api/upload.api'
+import { upload } from '@/apihandler/upload.api'
 
 const CONNECTED_EVENT = 'connected'
 const DISCONNECT_EVENT = 'disconnect'

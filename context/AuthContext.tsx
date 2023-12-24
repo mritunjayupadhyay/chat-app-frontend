@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import Loading from "../components/loading";
 import { UserInterface } from "../interfaces/user.interface";
 import { requestHandler } from "../utils/requestHandler.utils";
-import { loginUser, registerUser, logoutUser } from "@/api/auth.api";
+import { loginUser, registerUser, logoutUser } from "@/apihandler/auth.api";
 import { LocalStorage } from "@/utils/LocalStorage.utils";
 
 const apiCall = () => Promise.resolve({ data: "Hello World!" });

@@ -14,7 +14,7 @@ import {
   getGroupInfo,
   removeParticipantFromGroup,
   updateGroupName,
-} from "../../api/chat.api";
+} from "../../apihandler/chat.api";
 import { useAuth } from "../../context/AuthContext";
 import { ChatListItemInterface } from "../../interfaces/chat.interface";
 import { UserInterface } from "../../interfaces/user.interface";

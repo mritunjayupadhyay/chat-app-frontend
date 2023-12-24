@@ -1,7 +1,7 @@
 // Import necessary modules and utilities
 import axios from "axios";
 import { LocalStorage } from "@/utils/LocalStorage.utils";
-
+export const runtime = 'edge';
 // Create an Axios instance for API requests
 const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_SEVER_API_URL,

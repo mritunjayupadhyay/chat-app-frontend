@@ -34,7 +34,7 @@ const MessageItem: React.FC<{
         className={classes.messageItemContainer(!!isOwnMessage)}
       >
         <img
-          src={message.sender?.avatar?.url}
+          src={message.sender?.avatar}
           className={classes.messageItemImg(!!isOwnMessage)}
         />
         <div

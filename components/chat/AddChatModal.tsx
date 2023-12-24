@@ -252,7 +252,7 @@ const AddChatModal: React.FC<{
                               >
                                 <img
                                   className="h-6 w-6 rounded-full object-cover"
-                                  src={participant.avatar.url}
+                                  src={participant.avatar}
                                 />
                                 <p className="text-white">
                                   {participant.username}

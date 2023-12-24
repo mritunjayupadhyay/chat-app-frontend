@@ -249,7 +249,7 @@ const GroupChatDetailsModal: React.FC<{
                               <img
                                 className="w-24 h-24 -ml-16 rounded-full outline outline-4 outline-secondary"
                                 key={p._id}
-                                src={p.avatar.url}
+                                src={p.avatar}
                                 alt="avatar"
                               />
                             );
@@ -314,7 +314,7 @@ const GroupChatDetailsModal: React.FC<{
                                     <div className="flex justify-start items-start gap-3 w-full">
                                       <img
                                         className="h-12 w-12 rounded-full"
-                                        src={part.avatar.url}
+                                        src={part.avatar}
                                       />
                                       <div>
                                         <p className="text-white font-semibold text-sm inline-flex items-center w-full">

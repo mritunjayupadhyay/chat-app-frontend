@@ -30,7 +30,7 @@ const Register = () => {
         }
 
     // Handle user registration
-    const handleRegister = async () => await register(data)
+    const handleRegister = async () => await register({...data, avatar: profilePic})
     const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             const file = e.target.files[0]

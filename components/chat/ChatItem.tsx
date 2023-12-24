@@ -109,7 +109,7 @@ const ChatItem: React.FC<{
                 return (
                   <img
                     key={participant._id}
-                    src={participant.avatar.url}
+                    src={participant.avatar}
                     className={classes.participentAvatar(i)}
                   />
                 );

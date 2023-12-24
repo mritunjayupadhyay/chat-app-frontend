@@ -433,7 +433,7 @@ const ChatPage = () => {
                         <div className="flex justify-start items-center w-max gap-3">
                             <img
                                 className="h-14 w-14 rounded-full flex flex-shrink-0 object-cover"
-                                src={user?.avatar.url}
+                                src={user?.avatar}
                             />
                             <div>
                                 <p className="font-bold">{user?.username}</p>
@@ -563,7 +563,7 @@ const ChatPage = () => {
                                                             }
                                                             src={
                                                                 participant
-                                                                    .avatar.url
+                                                                    .avatar
                                                             }
                                                             className={classes.participantsAvatar(
                                                                 i

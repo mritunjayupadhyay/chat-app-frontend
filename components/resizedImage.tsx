@@ -4,14 +4,8 @@ import {
   } from "@heroicons/react/20/solid";
 import { useState } from "react";
 
-const classes = {
-    image: (classNames?: string) => cntl`
-    h-full w-full object-cover
-    ${classNames || ''}`
- }
-
 type PropTypes = {
-    imageUrl: string;
+    imageUrl?: string;
     classNames?: string;
     alt?: string;
 }
@@ -21,13 +15,13 @@ const ResizeImage = ({ imageUrl, classNames, alt }: PropTypes) => {
     return (
         <>
         {resized ? (
-        <div className="h-full z-40 p-8 overflow-hidden w-full fixed inset-0 bg-black/70 flex justify-center items-center">
+        <div className="h-full z-50 p-8 overflow-hidden w-full absolute inset-0 bg-black flex justify-center items-center">
         <XMarkIcon
           className="absolute top-5 right-5 w-9 h-9 text-white cursor-pointer"
           onClick={() => setResized(false)}
         />
         <img
-          className={classes.image()}
+          className="h-full w-full object-cover"
           src={imageUrl}
           alt={alt}
         />
@@ -35,11 +29,11 @@ const ResizeImage = ({ imageUrl, classNames, alt }: PropTypes) => {
       ) : null}
             
         <img
-                      className={classes.image(classNames)}
-                      src={imageUrl}
-                      onClick={() => setResized(true)}
-                      alt={alt}
-                    />
+            className={classNames}
+            src={imageUrl}
+            onClick={() => setResized(true)}
+            alt={alt}
+        />
         </>
     );
 }

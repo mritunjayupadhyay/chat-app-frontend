@@ -38,7 +38,7 @@ export const getChatObjectMetadata = (
       );
       // Return metadata specific to individual chats.
       return {
-        avatar: participant?.avatar, // Participant's avatar URL.
+        avatar: participant?.avatar || "https://via.placeholder.com/100x100.png", // Participant's avatar URL.
         title: participant?.username, // Participant's username serves as the title.
         description: participant?.name, // Email address of the participant.
         lastMessage,

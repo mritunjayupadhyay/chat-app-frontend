@@ -28,6 +28,7 @@ import { requestHandler } from '@/utils/requestHandler.utils'
 import { getChatMessages, getUserChats, sendMessage } from '../../apihandler/chat.api'
 import AddChatModal from '@/components/chat/AddChatModal'
 import { upload } from '@/apihandler/upload.api'
+import ResizeImage from '@/components/resizedImage'
 
 const CONNECTED_EVENT = 'connected'
 const DISCONNECT_EVENT = 'disconnect'
@@ -437,12 +438,13 @@ const ChatPage = () => {
             />
             <div className="w-full justify-between items-stretch h-screen flex flex-shrink-0 overflow-hidden">
                 <div className={classes.chatListContainer(isMessageWindowOpen)}>
-                    <div className="p-4 sticky top-0 bg-secondary z-20 flex justify-between items-center w-full border-borderColor">
+                    <div className="p-4 sticky top-0 bg-secondary z-0 flex justify-between items-center w-full border-borderColor">
                         <div className="flex justify-start items-center w-max gap-3">
                             <img
                                 className="h-14 w-14 rounded-full flex flex-shrink-0 object-cover"
                                 src={user?.avatar}
                             />
+                            {/* <ResizeImage imageUrl={user?.avatar} classNames="h-14 w-14 rounded-full flex flex-shrink-0 object-cover" /> */}
                             <div>
                                 <p className="font-bold">{user?.username}</p>
                                 <small className="text-zinc-400">

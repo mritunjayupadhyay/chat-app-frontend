@@ -65,7 +65,7 @@ const MessageItem: React.FC<{
                         />
                       </a>
                     </button> */}
-                    <ResizeImage imageUrl={fileUrl} />
+                    <ResizeImage imageUrl={fileUrl} classNames="h-full w-full object-cover" />
                   </div>
                 );
               })}

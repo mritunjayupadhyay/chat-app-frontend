@@ -18,9 +18,9 @@ const MessageItem: React.FC<{
   const [resizedImage, setResizedImage] = useState<string | null>(null);
   return (
     <>
-      {resizedImage ? (
+      {/* {resizedImage ? (
         <ResizeImage imageUrl={resizedImage} onClose={() => setResizedImage(null)} />
-      ) : null}
+      ) : null} */}
       <div
         className={classes.messageItemContainer(!!isOwnMessage)}
       >
@@ -47,9 +47,9 @@ const MessageItem: React.FC<{
                 return (
                   <div
                     key={fileUrl}
-                    className="group relative aspect-square rounded-xl overflow-hidden cursor-pointer"
+                    className="group aspect-square rounded-xl overflow-hidden cursor-pointer"
                   >
-                    <button
+                    {/* <button
                       onClick={() => setResizedImage(fileUrl)}
                       className="absolute inset-0 z-20 flex justify-center items-center w-full gap-2 h-full bg-black/60 group-hover:opacity-100 opacity-0 transition-opacity ease-in-out duration-150"
                     >
@@ -64,12 +64,8 @@ const MessageItem: React.FC<{
                           className="hover:text-zinc-400 h-6 w-6 text-white cursor-pointer"
                         />
                       </a>
-                    </button>
-                    <img
-                      className="h-full w-full object-cover"
-                      src={fileUrl}
-                      alt="msg_img"
-                    />
+                    </button> */}
+                    <ResizeImage imageUrl={fileUrl} />
                   </div>
                 );
               })}

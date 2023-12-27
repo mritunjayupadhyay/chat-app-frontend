@@ -8,6 +8,7 @@ import {
 import moment from "moment";
 import { useState } from "react";
 import { classes } from "./chat.style";
+import ResizeImage from "../resizedImage";
 
 const MessageItem: React.FC<{
   isOwnMessage?: boolean;
@@ -18,17 +19,7 @@ const MessageItem: React.FC<{
   return (
     <>
       {resizedImage ? (
-        <div className="h-full z-40 p-8 overflow-hidden w-full absolute inset-0 bg-black/70 flex justify-center items-center">
-          <XMarkIcon
-            className="absolute top-5 right-5 w-9 h-9 text-white cursor-pointer"
-            onClick={() => setResizedImage(null)}
-          />
-          <img
-            className="w-full h-full object-contain"
-            src={resizedImage}
-            alt="chat image"
-          />
-        </div>
+        <ResizeImage imageUrl={resizedImage} onClose={() => setResizedImage(null)} />
       ) : null}
       <div
         className={classes.messageItemContainer(!!isOwnMessage)}

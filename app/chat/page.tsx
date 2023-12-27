@@ -355,11 +355,18 @@ const ChatPage = () => {
         // If the socket isn't initialized, we don't set up listeners.
 
         // Fetch the chat list from the server.
+        if (!token) {
+            console.log("No token found", token, user)
+            router.replace('/login')
+            return;
+        }
         getChats()
         if (!socket) return
+
         // Retrieve the current chat details from local storage.
         const _currentChat = LocalStorage.get('currentChat')
 
+        
         // If there's a current chat saved in local storage:
         if (_currentChat) {
             // Set the current chat reference to the one from local storage.
@@ -430,7 +437,7 @@ const ChatPage = () => {
             />
             <div className="w-full justify-between items-stretch h-screen flex flex-shrink-0 overflow-hidden">
                 <div className={classes.chatListContainer(isMessageWindowOpen)}>
-                    <div className="p-4 sticky top-0 bg-bgSecondary z-20 flex justify-between items-center w-full border-secondary">
+                    <div className="p-4 sticky top-0 bg-secondary z-20 flex justify-between items-center w-full border-secondary">
                         <div className="flex justify-start items-center w-max gap-3">
                             <img
                                 className="h-14 w-14 rounded-full flex flex-shrink-0 object-cover"
@@ -540,7 +547,7 @@ const ChatPage = () => {
                 >
                     {currentChat.current && currentChat.current?._id ? (
                         <>
-                            <div className="p-4 sticky top-0 bg-bgSecondary z-20 flex justify-between items-center w-full border-secondary">
+                            <div className="p-4 sticky top-0 bg-secondary z-20 flex justify-between items-center w-full border-secondary">
                                 <div className="flex justify-start items-center w-max gap-3">
                                     <button
                                         onClick={() => {
@@ -674,7 +681,7 @@ const ChatPage = () => {
                                 )}
                             </div>
 
-                            <div className="sticky top-full p-4 flex justify-between items-center w-full gap-2 border-t-[0.1px] bg-bgSecondary border-secondary">
+                            <div className="sticky top-full p-4 flex justify-between items-center w-full gap-2 border-t-[0.1px] bg-secondary border-secondary">
                                 <input
                                     hidden
                                     id="attachments"
@@ -714,7 +721,7 @@ const ChatPage = () => {
                             </div>
                         </>
                     ) : (
-                        <div className="w-full h-full flex justify-center items-center">
+                        <div className="w-full bg-secondary h-full flex justify-center items-center">
                             No chat selected
                         </div>
                     )}

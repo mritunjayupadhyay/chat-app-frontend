@@ -28,7 +28,7 @@ import { requestHandler } from '@/utils/requestHandler.utils'
 import { getChatMessages, getUserChats, sendMessage } from '../../apihandler/chat.api'
 import AddChatModal from '@/components/chat/AddChatModal'
 import { upload } from '@/apihandler/upload.api'
-import ResizeImage from '@/components/resizedImage'
+import ChatList from '@/components/chat/ChatList'
 
 const CONNECTED_EVENT = 'connected'
 const DISCONNECT_EVENT = 'disconnect'
@@ -356,11 +356,11 @@ const ChatPage = () => {
         // If the socket isn't initialized, we don't set up listeners.
 
         // Fetch the chat list from the server.
-        if (!token) {
-            console.log("No token found", token, user)
-            router.replace('/login')
-            return;
-        }
+        // if (!token) {
+        //     console.log("No token found", token, user)
+        //     router.replace('/login')
+        //     return;
+        // }
         getChats()
         if (!socket) return
 
@@ -378,7 +378,7 @@ const ChatPage = () => {
             getMessages()
         }
         // An empty dependency array ensures this useEffect runs only once, similar to componentDidMount.
-    }, [socket])
+    }, [socket, token])
 
     // This useEffect handles the setting up and tearing down of socket event listeners.
     useEffect(() => {
@@ -438,109 +438,46 @@ const ChatPage = () => {
             />
             <div className="w-full justify-between items-stretch h-screen flex flex-shrink-0 overflow-hidden">
                 <div className={classes.chatListContainer(isMessageWindowOpen)}>
-                    <div className="p-4 sticky top-0 bg-secondary z-0 flex justify-between items-center w-full border-borderColor">
-                        <div className="flex justify-start items-center w-max gap-3">
-                            <img
-                                className="h-14 w-14 rounded-full flex flex-shrink-0 object-cover"
-                                src={user?.avatar}
-                            />
-                            {/* <ResizeImage imageUrl={user?.avatar} classNames="h-14 w-14 rounded-full flex flex-shrink-0 object-cover" /> */}
-                            <div>
-                                <p className="font-bold">{user?.username}</p>
-                                <small className="text-zinc-400">
-                                    {user?.name}
-                                </small>
-                            </div>
-                        </div>
-
-                        <button
-                            onClick={() => setOpenAddChat(true)}
-                            className="rounded-xl border-none bg-transparent text-white py-4 px-5 flex flex-shrink-0"
-                        >
-                            <UserPlusIcon className="h-6 w-6 text-white" />
-                        </button>
-                    </div>
-                    <div className="bg-bgPrimary z-10 w-full sticky top-0 py-4 px-4 flex justify-between items-center gap-4">
-                        <Input
-                            placeholder="Search or start new chat"
-                            value={localSearchQuery}
-                            onChange={(e) =>
-                                setLocalSearchQuery(
-                                    e.target.value.toLowerCase()
+                    <ChatList 
+                        openAddChat={() => setOpenAddChat(true)} 
+                        loadingChats={loadingChats}
+                        chats={chats}
+                        currentChat={currentChat.current}
+                        unreadMessages={unreadMessages}
+                        selectChat={(chat) => {
+                            if (
+                                currentChat.current?._id &&
+                                currentChat.current?._id ===
+                                    chat._id
+                            )
+                                return
+                            LocalStorage.set(
+                                'currentChat',
+                                chat
+                            )
+                            currentChat.current = chat
+                            setMessage('')
+                            getMessages()
+                        }}
+                        deleteChat={(chatId) => {
+                            setChats((prev) =>
+                                prev.filter(
+                                    (chat) =>
+                                        chat._id !== chatId
+                                )
+                            )
+                            if (
+                                currentChat.current?._id ===
+                                chatId
+                            ) {
+                                currentChat.current = null
+                                LocalStorage.remove(
+                                    'currentChat'
                                 )
                             }
-                            className="py-3 px-4 rounded-md"
-                        />
-                    </div>
-                    <div className="px-4">
-                        {loadingChats ? (
-                            <div className="flex justify-center items-center h-[calc(100%-88px)]">
-                                <Typing />
-                            </div>
-                        ) : (
-                            // Iterating over the chats array
-                            [...chats]
-                                // Filtering chats based on a local search query
-                                .filter((chat) =>
-                                    // If there's a localSearchQuery, filter chats that contain the query in their metadata title
-                                    localSearchQuery
-                                        ? getChatObjectMetadata(chat, user!)
-                                              .title?.toLocaleLowerCase()
-                                              ?.includes(localSearchQuery)
-                                        : // If there's no localSearchQuery, include all chats
-                                          true
-                                )
-                                .map((chat) => {
-                                    return (
-                                        <ChatItem
-                                            chat={chat}
-                                            isActive={
-                                                chat._id ===
-                                                currentChat.current?._id
-                                            }
-                                            unreadCount={
-                                                unreadMessages.filter(
-                                                    (n) => n.chat === chat._id
-                                                ).length
-                                            }
-                                            onClick={(chat) => {
-                                                if (
-                                                    currentChat.current?._id &&
-                                                    currentChat.current?._id ===
-                                                        chat._id
-                                                )
-                                                    return
-                                                LocalStorage.set(
-                                                    'currentChat',
-                                                    chat
-                                                )
-                                                currentChat.current = chat
-                                                setMessage('')
-                                                getMessages()
-                                            }}
-                                            key={chat._id}
-                                            onChatDelete={(chatId) => {
-                                                setChats((prev) =>
-                                                    prev.filter(
-                                                        (chat) =>
-                                                            chat._id !== chatId
-                                                    )
-                                                )
-                                                if (
-                                                    currentChat.current?._id ===
-                                                    chatId
-                                                ) {
-                                                    currentChat.current = null
-                                                    LocalStorage.remove(
-                                                        'currentChat'
-                                                    )
-                                                }
-                                            }}
-                                        />
-                                    )
-                                })
-                        )}
-                    </div>
+                        }}
+                    />
+                    
                 </div>
                 <div
                     className={classes.messageWindowContainer(

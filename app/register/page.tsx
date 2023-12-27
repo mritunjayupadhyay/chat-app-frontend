@@ -6,6 +6,7 @@ import Input from '@/components/input'
 import { Button } from '@/components/button'
 import { PaperClipIcon } from '@heroicons/react/20/solid'
 import { upload } from '@/apihandler/upload.api';
+import Loading from "../../components/loading";
 
 
 export const runtime = 'edge';
@@ -17,6 +18,7 @@ const Register = () => {
         password: '',
     })
     const [profilePic, setProfilePic] = useState<string>('')
+    const [isLoading, setIsLoading] = useState(false);
 
     // Access the register function from the authentication context
     const { register } = useAuth()
@@ -35,6 +37,7 @@ const Register = () => {
     const handleRegister = async () => await register({...data, avatar: profilePic})
     const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
+            setIsLoading(true)
             const file = e.target.files[0]
             const res = await upload({
                 name: file.name,
@@ -57,6 +60,7 @@ const Register = () => {
             const url = `${process.env.NEXT_PUBLIC_R2_BUCKET_DOMAIN}/${objectKey}`
 
             setProfilePic(url)
+            setIsLoading(false)
         }
     }
 
@@ -72,7 +76,8 @@ const Register = () => {
                     <div className="w-full flex justify-center py-2">
                         <img src={profilePic} alt="" className="w-24 rounded-full" />
                     </div>
-                ) : null}
+                ) : (isLoading ? <Loading /> : null)
+                }
                 <div className="w-full">
                     <input
                         hidden

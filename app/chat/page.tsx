@@ -437,7 +437,7 @@ const ChatPage = () => {
             />
             <div className="w-full justify-between items-stretch h-screen flex flex-shrink-0 overflow-hidden">
                 <div className={classes.chatListContainer(isMessageWindowOpen)}>
-                    <div className="p-4 sticky top-0 bg-secondary z-20 flex justify-between items-center w-full border-secondary">
+                    <div className="p-4 sticky top-0 bg-secondary z-20 flex justify-between items-center w-full border-borderColor">
                         <div className="flex justify-start items-center w-max gap-3">
                             <img
                                 className="h-14 w-14 rounded-full flex flex-shrink-0 object-cover"
@@ -547,7 +547,7 @@ const ChatPage = () => {
                 >
                     {currentChat.current && currentChat.current?._id ? (
                         <>
-                            <div className="p-4 sticky top-0 bg-secondary z-20 flex justify-between items-center w-full border-secondary">
+                            <div className="p-4 sticky top-0 bg-secondary z-20 flex justify-between items-center w-full border-borderColor">
                                 <div className="flex justify-start items-center w-max gap-3">
                                     <button
                                         onClick={() => {
@@ -721,7 +721,7 @@ const ChatPage = () => {
                             </div>
                         </>
                     ) : (
-                        <div className="w-full bg-secondary h-full flex justify-center items-center">
+                        <div className="w-full bg-bgPrimary h-full flex justify-center items-center">
                             No chat selected
                         </div>
                     )}

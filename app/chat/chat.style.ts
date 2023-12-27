@@ -26,7 +26,7 @@ const classes = {
     ${isMessageWindowOpen ? "hidden sm:block" : ""}
     `,
     messageWindowContainer: (isMessageWindowOpen: boolean) => cntl`
-    border-l-[0.1px] border-secondary
+    border-l-[0.1px] border-borderColor
     w-full sm:w-2/3
     ${isMessageWindowOpen ? "" : "hidden sm:block"}
     `,

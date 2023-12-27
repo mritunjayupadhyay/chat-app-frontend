@@ -20,6 +20,7 @@ const config: Config = {
         danger: "#eb3330",
         success: "#4aac68",
         bgPrimary: "#111b21",
+        borderColor: "#333f46",
         bgInput: "#2a3942",
         bgMyMessage: "#005c4b",
         byIncomingMessage: "#202c33",

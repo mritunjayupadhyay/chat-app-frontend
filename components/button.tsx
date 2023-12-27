@@ -3,7 +3,7 @@ import cntl from "cntl";
 
 const classes = {
     buttonClass: (severity: string, size: string, fullWidth?: boolean, className?: string) => cntl`
-    rounded-full inline-flex flex-shrink-0 justify-center 
+    rounded-full inline-flex flex-shrink-0 justify-center pointer
     items-center text-center text-white focus-visible:outline 
     focus-visible:outline-2 focus-visible:outline-offset-2 
     focus-visible:outline-white shadow-sm

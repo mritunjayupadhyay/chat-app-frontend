@@ -30,11 +30,12 @@ const ResizeImage = ({ imageUrl, classNames, alt }: PropTypes) => {
       </div>
       ) : null}
         <Image
-            alt={alt || 'Message Attachment full'}
+            alt={alt || 'Message Attachment'}
             src={imageUrl || ''} 
             onClick={() => setResized(true)}                           
-            fill
             style={{objectFit: "cover"}}
+            width={400}
+            height={400}
             className={classNames}        />
         </>
     );

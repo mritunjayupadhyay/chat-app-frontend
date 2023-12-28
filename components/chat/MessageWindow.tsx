@@ -18,6 +18,7 @@ import { STOP_TYPING_EVENT, TYPING_EVENT } from '@/app/chat/page'
 import MessageItem from './MessageItem'
 import Input from '../input'
 import { upload } from '@/apihandler/upload.api'
+import Avatar from "../Avatar";
 
 const classes = {
     participantsAvatar: (i: number) => cntl`
@@ -208,13 +209,18 @@ const MessageWindow = ({
                                 })}
                         </div>
                     ) : (
-                        <Image
-                            alt="chat person profile picture"
-                            src={getChatObjectMetadata(currentChat, user!).avatar}
-                            width={56}
-                            height={56}
-                            style={{objectFit: "cover"}}
-                            className="h-14 w-14 rounded-full flex flex-shrink-0 object-cover"
+                        // <Image
+                        //     alt="chat person profile picture"
+                        //     src={getChatObjectMetadata(currentChat, user!).avatar}
+                        //     width={56}
+                        //     height={56}
+                        //     style={{objectFit: "cover"}}
+                        //     className="h-14 w-14 rounded-full flex flex-shrink-0 object-cover"
+                        // />
+                        <Avatar
+                        imageUrl={getChatObjectMetadata(currentChat, user!).avatar}
+                        name={getChatObjectMetadata(currentChat, user!).title || "USER"}
+                         classNames="h-14 w-14 rounded-full flex flex-shrink-0 object-cover"
                         />
                     )}
                     <div>

@@ -44,7 +44,7 @@ const LetterAvatar = ({ name }: PropTypes) => {
       };
     return (
         <div className="flex w-12 h-12 rounded-full justify-center items-center text-white" style={customStyle}>
-        <span className="uppercase"> {initials} </span>
+        <span className="uppercase text-white text-sm font-normal"> {initials} </span>
       </div>
     )
 }

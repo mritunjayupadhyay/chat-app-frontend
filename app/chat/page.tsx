@@ -43,15 +43,7 @@ export const UPDATE_GROUP_NAME_EVENT = 'updateGroupName'
 
 export const runtime = 'edge';
 const ChatPage = () => {
-    const router = useRouter()
-    const { token, user } = useAuth()
-
-    // useEffect(() => {
-    //     if (!token) {
-    //       console.log("No token found", token, user)
-    //         router.replace('/login')
-    //     }
-    // }, [])
+    const { token } = useAuth()
 
     const { socket } = useSocket()
 
@@ -73,6 +65,7 @@ const ChatPage = () => {
         ChatMessageInterface[]
     >([]) // To track unread messages
 
+    const [isTyping, setIsTyping] = useState(false) // To track if someone is currently typing
     const [isMessageWindowOpen, setMessageWindowOpen] = useState(false) // To track if the message window is open
 
     /**
@@ -344,7 +337,6 @@ const ChatPage = () => {
                                 chat
                             )
                             currentChat.current = chat
-                            setMessage('')
                             getMessages()
                         }}
                         deleteChat={(chatId) => {
@@ -384,6 +376,7 @@ const ChatPage = () => {
                         messages={messages}
                         sendChatMessageHandler={sendChatMessageHandler}
                         isConnected={isConnected}
+                        isTyping={isTyping}
                         />
                     ) : (
                         <div className="w-full bg-bgPrimary h-full flex justify-center items-center">

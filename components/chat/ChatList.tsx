@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { UserPlusIcon } from "@heroicons/react/20/solid"
 import Input from "../input"
 import ChatItem from "./ChatItem"
@@ -29,9 +30,14 @@ const ChatList = ({
         <>
             <div className="p-4 sticky top-0 bg-secondary z-0 flex justify-between items-center w-full border-borderColor">
                         <div className="flex justify-start items-center w-max gap-3">
-                            <img
+                            <Image
+                                alt="profile picture"
+                                src={user?.avatar || ''}
+                                priority
+                                width={56}
+                                height={56}
+                                style={{objectFit: "cover"}}
                                 className="h-14 w-14 rounded-full flex flex-shrink-0 object-cover"
-                                src={user?.avatar}
                             />
                             {/* <ResizeImage imageUrl={user?.avatar} classNames="h-14 w-14 rounded-full flex flex-shrink-0 object-cover" /> */}
                             <div>

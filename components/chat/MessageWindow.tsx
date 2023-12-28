@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useAuth } from '@/context/AuthContext'
 import { useSocket } from '@/context/SocketContext'
 import { ChatListItemInterface, ChatMessageInterface } from '@/interfaces/chat.interface'
@@ -9,13 +10,14 @@ import {
     XCircleIcon,
 } from '@heroicons/react/20/solid'
 import cntl from 'cntl'
-import { useRef, useState } from 'react'
+import { use, useEffect, useRef, useState } from 'react'
 import Typing from './Typing'
 import { requestHandler } from '@/utils/requestHandler.utils'
 import { sendMessage } from '@/apihandler/chat.api'
 import { STOP_TYPING_EVENT, TYPING_EVENT } from '@/app/chat/page'
 import MessageItem from './MessageItem'
 import Input from '../input'
+import { upload } from '@/apihandler/upload.api'
 
 const classes = {
     participantsAvatar: (i: number) => cntl`
@@ -42,11 +44,12 @@ type PropTypes = {
     messages: ChatMessageInterface[];
     sendChatMessageHandler: (data: ChatMessageInterface) => void;
     isConnected: boolean;
+    isTyping: boolean
 }
 
 const MessageWindow = ({ 
     currentChat, closeMessageWindow, loadingMessages,
-    messages, sendChatMessageHandler, isConnected
+    messages, sendChatMessageHandler, isConnected, isTyping
  }: PropTypes) => {
     const { user } = useAuth()
     const { socket } = useSocket()
@@ -54,13 +57,16 @@ const MessageWindow = ({
         // To keep track of the setTimeout function
         const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null)
     
-    const [isTyping, setIsTyping] = useState(false) // To track if someone is currently typing
     const [selfTyping, setSelfTyping] = useState(false) // To track if the current user is typing
 
     const [message, setMessage] = useState('') // To store the currently typed message
     const [localSearchQuery, setLocalSearchQuery] = useState('') // For local search functionality
 
     const [attachedFilesUrl, setAttachedFilesUrl] = useState<string[]>([]) // To store files attached to messages
+
+    useEffect(() => {
+        setMessage('') // Clear Message Input
+    }, [currentChat?._id])
 
     // Function to send a chat message
     const sendChatMessage = async () => {
@@ -127,7 +133,6 @@ const MessageWindow = ({
                 console.log('urls', urls)
                 // setAttachedFilesUrl(urls)
                 setAttachedFilesUrl((prev) => [...urls, ...prev])
-                setAttachedFiles(Array.from(e.target.files))
             }
         } catch (e) {
             console.log('error', e)
@@ -183,25 +188,33 @@ const MessageWindow = ({
                                 .slice(0, 3)
                                 .map((participant, i) => {
                                     return (
-                                        <img
+                                        // <img
+                                        //     key={participant._id}
+                                        //     src={participant.avatar}
+                                        //     className={classes.participantsAvatar(
+                                        //         i
+                                        //     )}
+                                        // />
+                                        <Image
                                             key={participant._id}
+                                            alt="participant profile picture"
                                             src={participant.avatar}
-                                            className={classes.participantsAvatar(
-                                                i
-                                            )}
+                                            width={56}
+                                            height={56}
+                                            style={{objectFit: "cover"}}
+                                            className={classes.participantsAvatar(i)}
                                         />
                                     )
                                 })}
                         </div>
                     ) : (
-                        <img
+                        <Image
+                            alt="chat person profile picture"
+                            src={getChatObjectMetadata(currentChat, user!).avatar}
+                            width={56}
+                            height={56}
+                            style={{objectFit: "cover"}}
                             className="h-14 w-14 rounded-full flex flex-shrink-0 object-cover"
-                            src={
-                                getChatObjectMetadata(
-                                    currentChat,
-                                    user!
-                                ).avatar
-                            }
                         />
                     )}
                     <div>
@@ -243,10 +256,12 @@ const MessageWindow = ({
                                             <XCircleIcon className="h-6 w-6 text-white" />
                                         </button>
                                     </div>
-                                    <img
-                                        className="h-full rounded-xl w-full object-cover"
-                                        src={fileUrl}
-                                        alt="attachment"
+                                    <Image
+                                    alt="chat person profile picture"
+                                    src={fileUrl}                            
+                                    fill
+                                    style={{objectFit: "cover"}}
+                                    className="h-full rounded-xl w-full object-cover"
                                     />
                                 </div>
                             )

@@ -13,6 +13,7 @@ import { getChatObjectMetadata } from "@/utils/chat.utils";
 import GroupChatDetailsModal from "./GroupChatDetailsModal";
 import { requestHandler } from "@/utils/requestHandler.utils";
 import { deleteOneOnOneChat } from "@/apihandler/chat.api";
+import Avatar from "../Avatar";
 
 const ChatItem: React.FC<{
   chat: ChatListItemInterface;
@@ -107,19 +108,25 @@ const ChatItem: React.FC<{
             <div className="w-12 relative h-12 flex-shrink-0 flex justify-start items-center flex-nowrap">
               {chat.participants.slice(0, 3).map((participant, i) => {
                 return (
-                  <img
-                    key={participant._id}
-                    src={participant.avatar}
-                    className={classes.participentAvatar(i)}
-                  />
+                  <Avatar
+                  key={participant._id}
+                            imageUrl={participant.avatar}
+                            name={participant.name}
+                            classNames={classes.participentAvatar(i)}
+                        />
                 );
               })}
             </div>
           ) : (
-            <img
-              src={getChatObjectMetadata(chat, user!).avatar}
-              className="w-12 h-12 rounded-full"
-            />
+            // <img
+            //   src={getChatObjectMetadata(chat, user!).avatar}
+            //   className="w-12 h-12 rounded-full"
+            // />
+            <Avatar
+                  imageUrl={getChatObjectMetadata(chat, user!).avatar}
+                  name={getChatObjectMetadata(chat, user!).title || ""}
+                  classNames="w-12 h-12 rounded-full"
+              />
           )}
         </div>
         <div className="w-full">

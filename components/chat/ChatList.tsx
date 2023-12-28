@@ -8,6 +8,7 @@ import { useAuth } from "@/context/AuthContext"
 import Typing from "./Typing"
 import { getChatObjectMetadata } from "@/utils/chat.utils"
 import { ChatListItemInterface, ChatMessageInterface } from "@/interfaces/chat.interface"
+import Avatar from "../Avatar";
 
 type PropTypes = {
     openAddChat: () => void;
@@ -30,7 +31,7 @@ const ChatList = ({
         <>
             <div className="p-4 sticky top-0 bg-secondary z-0 flex justify-between items-center w-full border-borderColor">
                         <div className="flex justify-start items-center w-max gap-3">
-                            <Image
+                            {/* <Image
                                 alt="profile picture"
                                 src={user?.avatar || ''}
                                 priority
@@ -38,7 +39,12 @@ const ChatList = ({
                                 height={56}
                                 style={{objectFit: "cover"}}
                                 className="h-14 w-14 rounded-full flex flex-shrink-0 object-cover"
-                            />
+                            /> */}
+                            {user ? <Avatar
+                            imageUrl={user?.avatar || ""}
+                            name={user?.name || ""}
+                            classNames="h-14 w-14 rounded-full flex flex-shrink-0 object-cover"
+                            /> : null}
                             {/* <ResizeImage imageUrl={user?.avatar} classNames="h-14 w-14 rounded-full flex flex-shrink-0 object-cover" /> */}
                             <div>
                                 <p className="font-bold">{user?.username}</p>

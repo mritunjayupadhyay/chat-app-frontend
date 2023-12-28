@@ -1,4 +1,4 @@
-import cntl from "cntl";
+import Image from "next/image";
 import {
     XMarkIcon
   } from "@heroicons/react/20/solid";
@@ -20,20 +20,22 @@ const ResizeImage = ({ imageUrl, classNames, alt }: PropTypes) => {
           className="absolute top-5 right-5 w-9 h-9 text-white cursor-pointer"
           onClick={() => setResized(false)}
         />
-        <img
-          className="h-full w-full object-cover"
-          src={imageUrl}
-          alt={alt}
+        <Image
+            alt={alt || 'Message Attachment full'}
+            src={imageUrl || ''}                            
+            fill
+            style={{objectFit: "cover"}}
+            className="h-full w-full object-cover"
         />
       </div>
       ) : null}
-            
-        <img
-            className={classNames}
-            src={imageUrl}
-            onClick={() => setResized(true)}
-            alt={alt}
-        />
+        <Image
+            alt={alt || 'Message Attachment full'}
+            src={imageUrl || ''} 
+            onClick={() => setResized(true)}                           
+            fill
+            style={{objectFit: "cover"}}
+            className={classNames}        />
         </>
     );
 }

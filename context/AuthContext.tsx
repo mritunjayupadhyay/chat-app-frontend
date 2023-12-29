@@ -82,7 +82,7 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setUser(null);
     setToken(null);
     LocalStorage.clear(); // Clear local storage on logout
-    router.replace("/chat")// Redirect to the login page after successful logout
+    router.replace("/login")// Redirect to the login page after successful logout
   };
 
   // Check for saved user and token in local storage during component initialization

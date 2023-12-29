@@ -27,7 +27,7 @@ const ChatList = ({
     return (
         <>
            <ChatListHeader />
-                    <div className="bg-bgPrimary z-10 w-full sticky top-0 py-4 px-4 flex justify-between items-center gap-4">
+                    <div className="bg-bgPrimary z-0 w-full relative top-0 py-4 px-4 flex justify-between items-center gap-4">
                         <Input
                             placeholder="Search or start new chat"
                             value={localSearchQuery}
@@ -39,7 +39,7 @@ const ChatList = ({
                             className="py-3 px-4 rounded-md"
                         />
                     </div>
-                    <div className="px-4">
+                    <div className="p-4 overflow-y-scroll">
                         {loadingChats ? (
                             <div className="flex justify-center items-center h-[calc(100%-88px)]">
                                 <Typing />

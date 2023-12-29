@@ -30,6 +30,7 @@ import AddChatModal from '@/components/chat/AddChatModal'
 import { upload } from '@/apihandler/upload.api'
 import ChatList from '@/components/chat/ChatList'
 import MessageWindow from '@/components/chat/MessageWindow'
+import { AddChatProvider } from '@/context/AddChatContext'
 
 export const CONNECTED_EVENT = 'connected'
 export const DISCONNECT_EVENT = 'disconnect'
@@ -307,12 +308,8 @@ const ChatPage = () => {
     }, [socket, chats])
 
     return (
-        <>
+        <AddChatProvider>
             <AddChatModal
-                open={openAddChat}
-                onClose={() => {
-                    setOpenAddChat(false)
-                }}
                 onSuccess={() => {
                     getChats()
                 }}
@@ -385,7 +382,7 @@ const ChatPage = () => {
                     )}
                 </div>
             </div>
-        </>
+        </AddChatProvider>
     )
 }
 

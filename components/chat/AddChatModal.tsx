@@ -13,12 +13,13 @@ import {Button} from "../button";
 import Input from "../input";
 import Select from "../select";
 import { classes } from "./chat.style";
+import { useOpenChat } from "@/context/AddChatContext";
 
 const AddChatModal: React.FC<{
-  open: boolean;
-  onClose: () => void;
   onSuccess: (chat: ChatListItemInterface) => void;
-}> = ({ open, onClose, onSuccess }) => {
+}> = ({ onSuccess }) => {
+  const { setOpenAddChat, openAddChat} = useOpenChat()
+
   // State to store the list of users, initialized as an empty array
   const [users, setUsers] = useState<UserInterface[]>([]);
   // State to store the name of a group, initialized as an empty string
@@ -113,20 +114,20 @@ const AddChatModal: React.FC<{
     // Set the chat type to not be a group chat
     setIsGroupChat(false);
     // Execute the onClose callback/function
-    onClose();
+    setOpenAddChat(false);
   };
 
   // useEffect hook to perform side effects based on changes in the component lifecycle or state/props
   useEffect(() => {
     // Check if the modal/dialog is not open
-    if (!open) return;
+    if (!openAddChat) return;
     // Fetch users if the modal/dialog is open
     getUsers();
     // The effect depends on the 'open' value. Whenever 'open' changes, the effect will re-run.
-  }, [open]);
+  }, [openAddChat]);
 
   return (
-    <Transition.Root show={open} as={Fragment}>
+    <Transition.Root show={openAddChat} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={handleClose}>
         <Transition.Child
           as={Fragment}

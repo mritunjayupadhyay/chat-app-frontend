@@ -43,7 +43,7 @@ const ChatList = ({
                             {user ? <Avatar
                             imageUrl={user?.avatar || ""}
                             name={user?.name || ""}
-                            classNames="h-14 w-14 rounded-full flex flex-shrink-0 object-cover"
+                            classNames="h-12 w-12 rounded-full flex flex-shrink-0 object-cover"
                             /> : null}
                             {/* <ResizeImage imageUrl={user?.avatar} classNames="h-14 w-14 rounded-full flex flex-shrink-0 object-cover" /> */}
                             <div>
@@ -56,7 +56,7 @@ const ChatList = ({
 
                         <button
                             onClick={() => openAddChat()}
-                            className="rounded-xl border-none bg-transparent text-white py-4 px-5 flex flex-shrink-0"
+                            className="rounded-xl border-none bg-transparent text-white py-3 px-5 flex flex-shrink-0"
                         >
                             <UserPlusIcon className="h-6 w-6 text-white" />
                         </button>

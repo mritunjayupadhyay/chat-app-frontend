@@ -13,8 +13,8 @@ const Avatar = ({name, classNames, imageUrl}: PropTypes) => {
             <Image
                 alt={"Avatar"}
                 src={imageUrl}
-                width={56}
-                height={56}
+                width={48}
+                height={48}
                 style={{objectFit: "cover"}}
                 className={classNames}
             />

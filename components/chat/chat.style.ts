@@ -27,7 +27,7 @@ export const classes = {
     ${openOptions ? "block" : "hidden"}
     `,
     participentAvatar: (i: number) => cntl`
-    "w-7 h-7 border-[1px] border-white rounded-full absolute outline outline-4 outline-dark group-hover:outline-secondary",
+    "w-12 h-12 border-[1px] border-white rounded-full absolute outline outline-4 outline-dark group-hover:outline-secondary",
     ${
         i === 0
             ? "left-0 z-[3]"
@@ -39,7 +39,7 @@ export const classes = {
     }
     `,
     messageItemContainer: (isOwnMessage: boolean) => cntl`
-    flex justify-start items-end gap-3 max-w-[220px] sm:max-w-[300px] min-w-
+    flex justify-start items-end gap-1 sm:gap-3 max-w-[220px] sm:max-w-[300px] min-w-
     ${isOwnMessage ? "ml-auto" : ""}
     `,
     messageItemImg: (isOwnMessage: boolean) => cntl`

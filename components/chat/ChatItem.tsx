@@ -66,7 +66,7 @@ const ChatItem: React.FC<{
             e.stopPropagation();
             setOpenOptions(!openOptions);
           }}
-          className="self-center p-1 relative"
+          className="self-center relative"
         >
           <EllipsisVerticalIcon className="h-6 group-hover:w-6 group-hover:opacity-100 w-0 opacity-0 transition-all ease-in-out duration-100 text-zinc-300" />
           <div
@@ -105,7 +105,7 @@ const ChatItem: React.FC<{
         </button>
         <div className="flex justify-center items-center flex-shrink-0">
           {chat.isGroupChat ? (
-            <div className="w-12 relative h-12 flex-shrink-0 flex justify-start items-center flex-nowrap">
+            <div className="w-16 relative h-12 flex-shrink-0 flex justify-start items-center flex-nowrap">
               {chat.participants.slice(0, 3).map((participant, i) => {
                 return (
                   <Avatar
@@ -125,11 +125,11 @@ const ChatItem: React.FC<{
             <Avatar
                   imageUrl={getChatObjectMetadata(chat, user!).avatar}
                   name={getChatObjectMetadata(chat, user!).title || ""}
-                  classNames="w-12 h-12 rounded-full"
+                  classNames="w-12 mr-4 h-12 rounded-full"
               />
           )}
         </div>
-        <div className="w-full">
+        <div className="w-full pl-1">
           <p className="truncate-1">
             {getChatObjectMetadata(chat, user!).title}
           </p>

@@ -22,9 +22,10 @@ const ResizeImage = ({ imageUrl, classNames, alt }: PropTypes) => {
         />
         <Image
             alt={alt || 'Message Attachment full'}
-            src={imageUrl || ''}                            
-            fill
-            style={{objectFit: "cover"}}
+            src={imageUrl || ''}  
+            width={800}       
+            height={800}                   
+            style={{objectFit: "contain"}}
             className="h-full w-full object-cover"
         />
       </div>

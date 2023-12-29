@@ -22,7 +22,7 @@ import Avatar from "../Avatar";
 
 const classes = {
     participantsAvatar: (i: number) => cntl`
-    w-9 h-9 border-[1px] border-white rounded-full absolute outline outline-4 outline-dark
+    w-12 h-12 border-[1px] border-white rounded-full absolute outline outline-4 outline-dark
     ${
         i === 0
             ? 'left-0 z-30'
@@ -33,7 +33,7 @@ const classes = {
                 : ''
     }`,
     messageWindow: (count: number) => cntl`
-    p-8 overflow-y-auto flex flex-col-reverse gap-6 w-full bg-bgPrimary
+    p-4 sm:p-8 overflow-y-auto flex flex-col-reverse gap-6 w-full bg-bgPrimary
     ${count > 0 ? 'h-[calc(100vh-336px)]' : 'h-[calc(100vh-176px)]'}
     `,
 }
@@ -184,39 +184,21 @@ const MessageWindow = ({
                         <ArrowLeftIcon className="h-6 w-6 text-white" />
                     </button>
                     {currentChat?.isGroupChat ? (
-                        <div className="w-12 relative h-12 flex-shrink-0 flex justify-start items-center flex-nowrap">
+                        <div className="w-16 relative h-12 flex-shrink-0 flex justify-start items-center flex-nowrap">
                             {currentChat?.participants
                                 .slice(0, 3)
                                 .map((participant, i) => {
                                     return (
-                                        // <img
-                                        //     key={participant._id}
-                                        //     src={participant.avatar}
-                                        //     className={classes.participantsAvatar(
-                                        //         i
-                                        //     )}
-                                        // />
-                                        <Image
-                                            key={participant._id}
-                                            alt="participant profile picture"
-                                            src={participant.avatar}
-                                            width={56}
-                                            height={56}
-                                            style={{objectFit: "cover"}}
-                                            className={classes.participantsAvatar(i)}
+                                        <Avatar
+                                        key={participant._id}
+                                        imageUrl={participant.avatar}
+                                        name={participant.name}
+                                        classNames={classes.participantsAvatar(i)}
                                         />
                                     )
                                 })}
                         </div>
                     ) : (
-                        // <Image
-                        //     alt="chat person profile picture"
-                        //     src={getChatObjectMetadata(currentChat, user!).avatar}
-                        //     width={56}
-                        //     height={56}
-                        //     style={{objectFit: "cover"}}
-                        //     className="h-14 w-14 rounded-full flex flex-shrink-0 object-cover"
-                        // />
                         <Avatar
                         imageUrl={getChatObjectMetadata(currentChat, user!).avatar}
                         name={getChatObjectMetadata(currentChat, user!).title || "USER"}

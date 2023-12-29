@@ -20,7 +20,7 @@ const Avatar = ({name, classNames, imageUrl}: PropTypes) => {
             />
         )
     }
-    return LetterAvatar({name});
+    return LetterAvatar({name, classNames});
 }
 
 export default Avatar;

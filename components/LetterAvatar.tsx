@@ -2,15 +2,17 @@ import cntl from "cntl";
 
 type PropTypes = {
     name: string;
+    classNames?: string;
 }
 
 const classes = {
-    avatar: (color: string) => cntl`
-    
-    bg-[${color}]
+    avatar: (classNames?: string) => cntl`
+    flex w-12 h-12 rounded-full justify-center 
+    items-center text-white
+    ${classNames || ''}
     `
 }
-const LetterAvatar = ({ name }: PropTypes) => {
+const LetterAvatar = ({ name, classNames }: PropTypes) => {
     const getInitials = (name: string) => {
         const firstName = name.split(" ")[0];
         const lastName = name.split(" ")[1];
@@ -43,7 +45,7 @@ const LetterAvatar = ({ name }: PropTypes) => {
         background: color,
       };
     return (
-        <div className="flex w-12 h-12 rounded-full justify-center items-center text-white" style={customStyle}>
+        <div className={classes.avatar(classNames)} style={customStyle}>
         <span className="uppercase text-white text-sm font-normal"> {initials} </span>
       </div>
     )

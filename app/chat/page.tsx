@@ -243,6 +243,7 @@ const ChatPage = () => {
         //     router.replace('/login')
         //     return;
         // }
+        if (!token) return
         getChats()
         if (!socket) return
 

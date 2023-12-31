@@ -46,7 +46,7 @@ const LetterAvatar = ({ name, classNames }: PropTypes) => {
       };
     return (
         <div className={classes.avatar(classNames)} style={customStyle}>
-        <span className="uppercase text-white text-sm font-normal"> {initials} </span>
+        <span className="uppercase text-white font-normal"> {initials} </span>
       </div>
     )
 }

@@ -31,6 +31,7 @@ import { upload } from '@/apihandler/upload.api'
 import ChatList from '@/components/chat/ChatList'
 import MessageWindow from '@/components/chat/MessageWindow'
 import { AddChatProvider } from '@/context/AddChatContext'
+import Profile from '@/components/Profile'
 
 export const CONNECTED_EVENT = 'connected'
 export const DISCONNECT_EVENT = 'disconnect'
@@ -56,7 +57,6 @@ const ChatPage = () => {
     // Define state variables and their initial values using 'useState'
     const [isConnected, setIsConnected] = useState(false) // For tracking socket connection
 
-    const [openAddChat, setOpenAddChat] = useState(false) // To control the 'Add Chat' modal
     const [loadingChats, setLoadingChats] = useState(false) // To indicate loading of chats
     const [loadingMessages, setLoadingMessages] = useState(false) // To indicate loading of messages
 
@@ -67,6 +67,8 @@ const ChatPage = () => {
     >([]) // To track unread messages
 
     const [isTyping, setIsTyping] = useState(false) // To track if someone is currently typing
+    const [openProfile, setOpenProfile] = useState(true) // To track if someone is currently typing
+
     const [isMessageWindowOpen, setMessageWindowOpen] = useState(false) // To track if the message window is open
 
     /**
@@ -307,7 +309,7 @@ const ChatPage = () => {
         // So, even if some socket callbacks are updating the `chats` state, it's not
         // updating on each `useEffect` call but on each socket call.
     }, [socket, chats])
-
+    console.log('open Profile', openProfile);
     return (
         <AddChatProvider>
             <AddChatModal
@@ -317,8 +319,8 @@ const ChatPage = () => {
             />
             <div className="w-full justify-between items-stretch h-screen flex flex-shrink-0 overflow-hidden">
                 <div className={classes.chatListContainer(isMessageWindowOpen)}>
-                    <ChatList 
-                        openAddChat={() => setOpenAddChat(true)} 
+                {openProfile ? <Profile closeProfile={() => setOpenProfile(false)} /> : <ChatList 
+                        openProfile={() => setOpenProfile(true)}
                         loadingChats={loadingChats}
                         chats={chats}
                         currentChat={currentChat.current}
@@ -354,7 +356,8 @@ const ChatPage = () => {
                                 )
                             }
                         }}
-                    />
+                    />}
+                    
                     
                 </div>
                 <div

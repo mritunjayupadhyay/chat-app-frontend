@@ -8,7 +8,11 @@ import Link from 'next/link'
 import { Fragment } from 'react'
 import { Button } from '../button'
 
-export const ChatListHeader = () => {
+type PropTypes = {
+    openProfile: () => void;
+}
+
+export const ChatListHeader = ({ openProfile }: PropTypes) => {
     const { user, logout } = useAuth()
     const { setOpenAddChat } = useOpenChat()
 
@@ -56,9 +60,7 @@ export const ChatListHeader = () => {
                                     <Menu.Item>
                                         <div
                                             className="text-white cursor-pointer bg-bgInput hover:bg-secondary w-full pl-8 h-12 flex items-center opacity-75 hover:opacity-100"
-                                            onClick={() =>
-                                                console.log('profile')
-                                            }
+                                            onClick={openProfile}
                                         >
                                             Profile
                                         </div>

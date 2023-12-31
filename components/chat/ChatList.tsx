@@ -8,25 +8,25 @@ import { ChatListItemInterface, ChatMessageInterface } from "@/interfaces/chat.i
 import ChatListHeader from "./ChatListHeader"
 
 type PropTypes = {
-    openAddChat: () => void;
     loadingChats: boolean;
     chats: ChatListItemInterface[];
     unreadMessages: ChatMessageInterface[];
     currentChat: ChatListItemInterface | null;
     selectChat: (chat: ChatListItemInterface) => void;
     deleteChat: (chatId: string) => void;
+    openProfile: () => void;
 }
 
 const ChatList = ({ 
-    openAddChat, loadingChats, chats, 
+    loadingChats, chats, 
     unreadMessages, currentChat,
-    selectChat, deleteChat
+    selectChat, deleteChat, openProfile
 }: PropTypes) => {
     const [localSearchQuery, setLocalSearchQuery] = useState('') // For local search functionality
     const { user } = useAuth()
     return (
         <>
-           <ChatListHeader />
+           <ChatListHeader openProfile={openProfile} />
                     <div className="bg-bgPrimary z-0 w-full relative top-0 py-4 px-4 flex justify-between items-center gap-4">
                         <Input
                             placeholder="Search or start new chat"

@@ -1,9 +1,16 @@
-import Image from 'next/image';
+import Image from 'next/image'
 import { useAuth } from '@/context/AuthContext'
 import Avatar from './Avatar'
-import { CameraIcon, EllipsisVerticalIcon, XMarkIcon } from '@heroicons/react/20/solid'
+import {
+    MagnifyingGlassPlusIcon,
+    PencilSquareIcon,
+    XMarkIcon,
+} from '@heroicons/react/20/solid'
 import { Menu, Transition } from '@headlessui/react'
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
+import { upload } from '@/apihandler/upload.api'
+import Loading from './loading'
+import { Button } from './button'
 
 const classes = {
     profileImage: {
@@ -16,79 +23,106 @@ const classes = {
 
 const ProfileImage = () => {
     const { user } = useAuth()
-    const [viewPhoto, setViewPhoto] = useState<boolean>(false);
+    const [viewPhoto, setViewPhoto] = useState<boolean>(false)
+    const [isLoading, setIsLoading] = useState(false)
+    const [profilePic, setProfilePic] = useState<string>(user?.avatar || '')
+   
+    useEffect(() => {
+        setProfilePic(user?.avatar || '')
+    }, [user])
+
+    const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log('handleFileSelect', e.target.files)
+        if (e.target.files) {
+            setIsLoading(true)
+            const file = e.target.files[0]
+            const res = await upload({
+                name: file.name,
+                type: file.type,
+            })
+            const {
+                data: { presignedUrl, objectKey },
+                success,
+            } = res.data
+            if (success !== true) return ''
+            // To save images.
+            const uploadToR2Response = await fetch(presignedUrl, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': file.type,
+                },
+                body: file,
+            })
+            console.log('uploadToR2Response', uploadToR2Response)
+            const url = `${process.env.NEXT_PUBLIC_R2_BUCKET_DOMAIN}/${objectKey}`
+            console.log('url', url);
+            setProfilePic(url)
+            setIsLoading(false)
+        }
+    }
+
+    if (isLoading) {
+        return <Loading />
+    }
 
     return (
         <>
-        {viewPhoto ? (
-        <div className="w-full m-auto z-50 p-8 overflow-hidden  fixed flex justify-center items-center">
-        <XMarkIcon
-          className="fixed top-5 right-5 w-9 h-9 text-white cursor-pointer"
-          onClick={() => setViewPhoto(false)}
-        />
-        <Image
-            alt={'Profile Pic'}
-            src={user?.avatar || ''}  
-            width={800}       
-            height={800}                   
-            style={{objectFit: "contain"}}
-            className="h-full w-full object-cover"
-        />
-      </div>
-      ) : null}
-      <div className="profile-image">
-            <div className="w-48 h-48 group m-auto cursor-pointer relative ">
-                <Avatar
-                    imageUrl={user?.avatar || ''}
-                    name={user?.name || 'USER'}
-                    classNames="w-48 h-48 text-xl rounded-full flex flex-shrink-0 object-cover"
-                />
-                <div className="absolute transition ease-out duration-300 px-4  flex-col items-center justify-center rounded-full inset-0 bg-white bg-opacity-0 group-hover:bg-opacity-30 hidden group-hover:flex">
-                    <Menu as="div" className="relative inline-block text-left">
-                        <div>
-                            <Menu.Button>
-                                <CameraIcon className="h-8 w-8 text-white m-auto" />
-                                <p className="text-sm text-center text-white pt-2 uppercase">
-                                    Change Profile Photo
-                                </p>
-                            </Menu.Button>
-                        </div>
-                        <Transition
-                            as={Fragment}
-                            enter="transition ease-out duration-100"
-                            enterFrom="transform opacity-0 scale-95"
-                            enterTo="transform opacity-100 scale-100"
-                            leave="transition ease-in duration-75"
-                            leaveFrom="transform opacity-100 scale-100"
-                            leaveTo="transform opacity-0 scale-95"
-                        >
-                            <Menu.Items className="absolute left-1/3 mt-2 w-48 origin-top-right divide-y divide-gray-100 rounded-md bg-secondary shadow-lg ring-1 ring-black/5 focus:outline-none">
-                                <div className="py-2 bg-bgInput rounded-md">
-                                    <Menu.Item>
-                                        <div
-                                            className="text-white uppercase cursor-pointer bg-bgInput hover:bg-secondary w-full pl-8 h-12 flex items-center opacity-75 hover:opacity-100"
-                                            onClick={() => setViewPhoto(true)}
-                                        >
-                                            View Photo
-                                        </div>
-                                    </Menu.Item>
-                                    <Menu.Item>
-                                        <div
-                                            className="text-white uppercase cursor-pointer bg-bgInput hover:bg-secondary w-full pl-8 h-12 flex items-center opacity-75 hover:opacity-100"
-                                            onClick={() => console.log('logout')}
-                                        >
-                                            Change Photo
-                                        </div>
-                                    </Menu.Item>
-                                </div>
-                            </Menu.Items>
-                        </Transition>
-                    </Menu>
+            {viewPhoto ? (
+                <div className="w-full m-auto z-50 p-8 overflow-hidden  fixed flex justify-center items-center">
+                    <XMarkIcon
+                        className="fixed top-5 right-5 w-9 h-9 text-white cursor-pointer"
+                        onClick={() => setViewPhoto(false)}
+                    />
+                    <Image
+                        alt={'Profile Pic'}
+                        src={profilePic}
+                        width={200}
+                        height={200}
+                        quality={100}
+                        style={{ objectFit: 'contain' }}
+                        className="h-full w-full object-cover"
+                    />
+                </div>
+            ) : null}
+            <div className="profile-image">
+                <div className="w-48 h-48 group m-auto cursor-pointer relative">
+                    <Avatar
+                        imageUrl={profilePic || ''}
+                        name={user?.name || 'USER'}
+                        classNames="w-48 h-48 text-xl rounded-full flex flex-shrink-0 object-cover"
+                    />
+                    <div className="absolute transition ease-out duration-300 px-4 items-center 
+                    justify-around rounded-full inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 
+                    hidden group-hover:flex">
+                     <Button
+                        onClick={() => setViewPhoto(true)}
+                        className="rounded-xl border-none bg-transparent hover:bg-transparent active:bg-transparent text-white py-3 px-3 flex flex-shrink-0"
+                    >
+                    <MagnifyingGlassPlusIcon className="h-6 w-6 text-white " />
+                    </Button>
+                    <div
+                        className="rounded-xl border-none bg-transparent text-white py-3 px-3 flex flex-shrink-0"
+                    >
+                        <input
+                        hidden
+                        id="attachments"
+                        type="file"
+                        value=""
+                        multiple
+                        max={5}
+                        onChange={handleFileSelect}
+                    />
+                    <label
+                        htmlFor="attachments"
+                        className="w-full flex justify-center cursor-pointer p-2 sm:p-4 rounded-full bg-transparent"
+                    >
+                        <PencilSquareIcon className="h-6 w-6 text-white " />
+                    </label>
+                    </div>
+                    </div>
                 </div>
             </div>
-        </div>
         </>
-        
     )
 }
 

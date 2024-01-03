@@ -67,7 +67,7 @@ const ChatPage = () => {
     >([]) // To track unread messages
 
     const [isTyping, setIsTyping] = useState(false) // To track if someone is currently typing
-    const [openProfile, setOpenProfile] = useState(true) // To track if someone is currently typing
+    const [openProfile, setOpenProfile] = useState(false) // To track if someone is currently typing
 
     const [isMessageWindowOpen, setMessageWindowOpen] = useState(false) // To track if the message window is open
 
@@ -309,7 +309,6 @@ const ChatPage = () => {
         // So, even if some socket callbacks are updating the `chats` state, it's not
         // updating on each `useEffect` call but on each socket call.
     }, [socket, chats])
-    console.log('open Profile', openProfile);
     return (
         <AddChatProvider>
             <AddChatModal

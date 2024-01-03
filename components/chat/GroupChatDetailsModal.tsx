@@ -22,6 +22,17 @@ import { requestHandler } from "../../utils/requestHandler.utils";
 import {Button} from "../button";
 import Input from "../input";
 import Select from "../select";
+import Avatar from "../Avatar";
+
+const emptyChatMessageState = {
+  admin: '',
+  createdAt: '',
+  isGroupChat: true,
+  name: '',
+  participants: [],
+  updatedAt: '',
+  _id: ''
+}
 
 
 const GroupChatDetailsModal: React.FC<{
@@ -246,12 +257,18 @@ const GroupChatDetailsModal: React.FC<{
                         <div className="flex pl-16 justify-center items-center relative w-full h-max gap-3">
                           {groupDetails?.participants.slice(0, 3).map((p) => {
                             return (
-                              <img
-                                className="w-24 h-24 -ml-16 rounded-full outline outline-4 outline-secondary"
-                                key={p._id}
-                                src={p.avatar}
-                                alt="avatar"
-                              />
+                              // <img
+                              //   className="w-24 h-24 -ml-16 rounded-full outline outline-4 outline-secondary"
+                              //   key={p._id || ''}
+                              //   src={p.avatar || ''}
+                              //   alt="avatar"
+                              // />
+                              <Avatar
+                              key={p._id || ''}
+                                        imageUrl={p.avatar}
+                                        name={p.name}
+                                        classNames={"w-24 h-24 -ml-16 rounded-full outline outline-4 outline-secondary"}
+                                      />
                             );
                           })}
                           {groupDetails?.participants &&
@@ -312,9 +329,14 @@ const GroupChatDetailsModal: React.FC<{
                                 <React.Fragment key={part._id}>
                                   <div className="flex justify-between items-center w-full py-4">
                                     <div className="flex justify-start items-start gap-3 w-full">
-                                      <img
+                                      {/* <img
                                         className="h-12 w-12 rounded-full"
                                         src={part.avatar}
+                                      /> */}
+                                      <Avatar
+                                        imageUrl={part.avatar}
+                                        name={part.name}
+                                        classNames={"h-12 w-12 rounded-full"}
                                       />
                                       <div>
                                         <p className="text-white font-semibold text-sm inline-flex items-center w-full">

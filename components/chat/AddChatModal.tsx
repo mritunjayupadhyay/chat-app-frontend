@@ -14,6 +14,7 @@ import Input from "../input";
 import Select from "../select";
 import { classes } from "./chat.style";
 import { useOpenChat } from "@/context/AddChatContext";
+import Avatar from "../Avatar";
 
 const AddChatModal: React.FC<{
   onSuccess: (chat: ChatListItemInterface) => void;
@@ -251,10 +252,15 @@ const AddChatModal: React.FC<{
                                 className="inline-flex bg-secondary rounded-full p-2 border-[1px] border-zinc-400 items-center gap-2"
                                 key={participant._id}
                               >
-                                <img
+                                {/* <img
                                   className="h-6 w-6 rounded-full object-cover"
                                   src={participant.avatar}
-                                />
+                                /> */}
+                                 <Avatar
+                                        imageUrl={participant.avatar}
+                                        name={participant.name || participant.username}
+                                        classNames={"h-6 w-6 text-xs rounded-full object-cover"}
+                                      />
                                 <p className="text-white">
                                   {participant.username}
                                 </p>

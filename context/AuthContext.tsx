@@ -6,6 +6,7 @@ import { UserInterface } from "../interfaces/user.interface";
 import { requestHandler } from "../utils/requestHandler.utils";
 import { loginUser, registerUser, logoutUser } from "@/apihandler/auth.api";
 import { LocalStorage } from "@/utils/LocalStorage.utils";
+import { updateUserProfile } from "@/apihandler/user.api";
 
 const apiCall = () => Promise.resolve({ data: "Hello World!" });
 // Create a context to manage authentication-related data and functions
@@ -19,6 +20,10 @@ const AuthContext = createContext<{
     password: string;
     avatar?: string
   }) => Promise<void>;
+  updateUserData: (username: string, data: {
+    name?: string;
+    avatar?: string
+  }) => Promise<void>;
   logout: () => Promise<void>;
 }>({
   user: null,
@@ -26,6 +31,7 @@ const AuthContext = createContext<{
   login: async () => {},
   register: async () => {},
   logout: async () => {},
+  updateUserData: async () => {}
 });
 
 // Create a hook to access the AuthContext
@@ -54,6 +60,23 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         LocalStorage.set("token", data.accessToken);
         LocalStorage.remove("currentChat");
         router.replace("/chat") // Redirect to the chat page after successful login
+      },
+      alert // Display error alerts on request failure
+    );
+  };
+
+  const updateUserData = async (username:string,data: {
+    name?: string
+    avatar?: string
+}) => {
+    await requestHandler(
+      async () => await updateUserProfile(username, data),
+      setIsLoading,
+      (res) => {
+        const { data } = res;
+        console.log("getting data in auth context", data);
+        setUser(data.user);
+        LocalStorage.set("user", data.user);
       },
       alert // Display error alerts on request failure
     );
@@ -99,7 +122,7 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   // Provide authentication-related data and functions through the context
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, token }}>
+    <AuthContext.Provider value={{ user, login, register, updateUserData, logout, token }}>
       {isLoading ? <Loading /> : children} {/* Display a loader while loading */}
     </AuthContext.Provider>
   );

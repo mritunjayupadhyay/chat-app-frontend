@@ -21,6 +21,7 @@ const registerUser = (data: {
     return apiClient.post('/users/register', data)
 }
 
+
 const logoutUser = () => {
     console.log('logoutUser')
     return apiClient.get('/chats')

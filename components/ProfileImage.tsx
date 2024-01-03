@@ -11,6 +11,8 @@ import { Fragment, useEffect, useState } from 'react'
 import { upload } from '@/apihandler/upload.api'
 import Loading from './loading'
 import { Button } from './button'
+import { requestHandler } from '@/utils/requestHandler.utils'
+import { updateUserProfile } from '@/apihandler/user.api'
 
 const classes = {
     profileImage: {
@@ -22,7 +24,7 @@ const classes = {
 }
 
 const ProfileImage = () => {
-    const { user } = useAuth()
+    const { user, updateUserData } = useAuth()
     const [viewPhoto, setViewPhoto] = useState<boolean>(false)
     const [isLoading, setIsLoading] = useState(false)
     const [profilePic, setProfilePic] = useState<string>(user?.avatar || '')
@@ -31,7 +33,9 @@ const ProfileImage = () => {
         setProfilePic(user?.avatar || '')
     }, [user])
 
+
     const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (!user) return;
         console.log('handleFileSelect', e.target.files)
         if (e.target.files) {
             setIsLoading(true)
@@ -56,8 +60,8 @@ const ProfileImage = () => {
             console.log('uploadToR2Response', uploadToR2Response)
             const url = `${process.env.NEXT_PUBLIC_R2_BUCKET_DOMAIN}/${objectKey}`
             console.log('url', url);
-            setProfilePic(url)
-            setIsLoading(false)
+           
+            await updateUserData(user.username, { avatar: url})
         }
     }
 

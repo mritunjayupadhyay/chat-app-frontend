@@ -27,15 +27,18 @@ const classes = {
         i === 0
             ? 'left-0 z-30'
             : i === 1
-              ? 'left-2 z-20'
+              ? 'left-4 z-20'
               : i === 2
-                ? 'left-4 z-10'
+                ? 'left-8 z-10'
                 : ''
     }`,
     messageWindow: (count: number) => cntl`
     p-4 sm:p-8 overflow-y-auto flex flex-col-reverse gap-6 w-full bg-bgPrimary
     ${count > 0 ? 'h-[calc(100vh-336px)]' : 'h-[calc(100vh-176px)]'}
     `,
+    groupImageCollection: (length: number) => cntl`
+     relative h-12 flex-shrink-0 flex justify-start items-center flex-nowrap overflow-hidden
+     ${length > 3 ? 'w-28' : 'w-24'}`
 }
 
 type PropTypes = {
@@ -175,7 +178,7 @@ const MessageWindow = ({
     }
     return (
         <>
-            <div className="p-4 sticky top-0 bg-secondary z-20 flex justify-between items-center w-full border-borderColor">
+            <div className="p-4 relative h-20 top-0 bg-secondary z-10 flex justify-between items-center w-full border-borderColor">
                 <div className="flex justify-start items-center w-max gap-3">
                     <button
                         onClick={closeMessageWindow}
@@ -184,12 +187,13 @@ const MessageWindow = ({
                         <ArrowLeftIcon className="h-6 w-6 text-white" />
                     </button>
                     {currentChat?.isGroupChat ? (
-                        <div className="w-16 relative h-12 flex-shrink-0 flex justify-start items-center flex-nowrap">
+                        <div className={classes.groupImageCollection((currentChat?.participants || []).length)}>
                             {currentChat?.participants
                                 .slice(0, 3)
                                 .map((participant, i) => {
                                     return (
                                         <Avatar
+                                        resized={true}
                                         key={participant._id}
                                         imageUrl={participant.avatar}
                                         name={participant.name}
@@ -200,6 +204,7 @@ const MessageWindow = ({
                         </div>
                     ) : (
                         <Avatar
+                        resized={true}
                         imageUrl={getChatObjectMetadata(currentChat, user!).avatar}
                         name={getChatObjectMetadata(currentChat, user!).title || "USER"}
                          classNames="h-14 w-14 rounded-full flex flex-shrink-0 object-cover"

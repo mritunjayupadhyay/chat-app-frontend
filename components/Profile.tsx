@@ -36,7 +36,7 @@ const Profile = ({ closeProfile }: PropTypes) => {
 
     return (
         <>
-            <div className="p-4 sticky top-0 bg-secondary z-20 flex justify-between items-center w-full border-borderColor">
+            <div className="p-4 h-20 sticky top-0 bg-secondary z-20 flex justify-between items-center w-full border-borderColor">
                 <div className="flex justify-start items-center w-max gap-3">
                     <button
                         onClick={closeProfile}

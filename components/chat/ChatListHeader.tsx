@@ -17,14 +17,17 @@ export const ChatListHeader = ({ openProfile }: PropTypes) => {
     const { setOpenAddChat } = useOpenChat()
 
     return (
-        <div className="p-4 relative top-0 bg-secondary z-10 flex justify-between items-center w-full border-borderColor">
+        <div className="p-4 relative top-0 bg-secondary h-20 z-10 flex justify-between items-center w-full border-borderColor">
             <div className="flex justify-start items-center w-max gap-3">
                 {user ? (
-                    <Avatar
+                    <button className='border-none bg-transparent' onClick={openProfile}>
+                         <Avatar
                         imageUrl={user?.avatar || ''}
                         name={user?.name || ''}
                         classNames="h-12 w-12 rounded-full flex flex-shrink-0 object-cover"
                     />
+                    </button>
+                   
                 ) : null}
                 <div>
                     <p className="font-bold">{user?.username}</p>

@@ -1,47 +1,23 @@
 'use client'
-import {
-    PaperAirplaneIcon,
-    PaperClipIcon,
-    UserPlusIcon,
-    XCircleIcon,
-    ArrowLeftIcon,
-} from '@heroicons/react/20/solid'
 import React, { useEffect, useRef, useState } from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { useAuth } from '@/context/AuthContext'
 import { useSocket } from '@/context/SocketContext'
 
-import Input from '@/components/input'
 import {
     ChatListItemInterface,
     ChatMessageInterface,
 } from '@/interfaces/chat.interface'
-import Typing from '@/components/chat/Typing'
-import ChatItem from '@/components/chat/ChatItem'
 import { classes } from './chat.style'
-import { getChatObjectMetadata } from '@/utils/chat.utils'
-import MessageItem from '@/components/chat/MessageItem'
 import { LocalStorage } from '@/utils/LocalStorage.utils'
 import { requestHandler } from '@/utils/requestHandler.utils'
 
-import { getChatMessages, getUserChats, sendMessage } from '../../apihandler/chat.api'
+import { getChatMessages, getUserChats } from '../../apihandler/chat.api'
 import AddChatModal from '@/components/chat/AddChatModal'
-import { upload } from '@/apihandler/upload.api'
 import ChatList from '@/components/chat/ChatList'
 import MessageWindow from '@/components/chat/MessageWindow'
 import { AddChatProvider } from '@/context/AddChatContext'
 import Profile from '@/components/Profile'
-
-export const CONNECTED_EVENT = 'connected'
-export const DISCONNECT_EVENT = 'disconnect'
-export const JOIN_CHAT_EVENT = 'joinChat'
-export const NEW_CHAT_EVENT = 'newChat'
-export const TYPING_EVENT = 'typing'
-export const STOP_TYPING_EVENT = 'stopTyping'
-export const MESSAGE_RECEIVED_EVENT = 'messageReceived'
-export const LEAVE_CHAT_EVENT = 'leaveChat'
-export const UPDATE_GROUP_NAME_EVENT = 'updateGroupName'
+import { CONNECTED_EVENT, DISCONNECT_EVENT, JOIN_CHAT_EVENT, LEAVE_CHAT_EVENT, MESSAGE_RECEIVED_EVENT, NEW_CHAT_EVENT, STOP_TYPING_EVENT, TYPING_EVENT, UPDATE_GROUP_NAME_EVENT } from '@/constants/event.constant'
 
 export const runtime = 'edge';
 const ChatPage = () => {

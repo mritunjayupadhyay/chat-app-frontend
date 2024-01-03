@@ -14,11 +14,11 @@ import { use, useEffect, useRef, useState } from 'react'
 import Typing from './Typing'
 import { requestHandler } from '@/utils/requestHandler.utils'
 import { sendMessage } from '@/apihandler/chat.api'
-import { STOP_TYPING_EVENT, TYPING_EVENT } from '@/app/chat/page'
 import MessageItem from './MessageItem'
 import Input from '../input'
 import { upload } from '@/apihandler/upload.api'
 import Avatar from "../Avatar";
+import { STOP_TYPING_EVENT, TYPING_EVENT } from "@/constants/event.constant";
 
 const classes = {
     participantsAvatar: (i: number) => cntl`

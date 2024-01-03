@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Real Time Chat App
 
-## Getting Started
+## Introduction
 
-First, run the development server:
+The Chat App Frontend is built using modern web technologies to create a responsive and interactive user interface for a chat application. It communicates with a [backend server](https://github.com/mritunjayupadhyay/chat-app-backend) to facilitate real-time messaging and user interactions. You can check live version [here](https://chat.mjcodes.dev).
+
+## Features
+
+- **Real-time Messaging**: Users can send and receive messages in real-time.
+- **Photo Sharing**: Users can send and receive pictures in real-time.
+- **User Authentication**: Secure user authentication ensures that only authorized users can access the chat.
+- **Responsive Design**: The frontend is designed to work seamlessly on various devices and screen sizes.
+
+
+## Installation
+Before proceeding, Make sure you have Node.js and npm installed on your machine.
+
+bash
+# Clone the repository
+git clone git@github.com:mritunjayupadhyay/chat-app-frontend.git
+
+# Navigate to the cloned repository
+cd chat-app-frontend
+
+# Install the required dependencies
+npm install
+
+# Usage
+Once the installation is complete, you can start the application using the following command:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Start the application
+npm run start
 ```
+Open your web browser and go to http://localhost:3000. To use it locally you will need to run the [backend server](https://github.com/mritunjayupadhyay/chat-app-backend) and add environment variable. I have add a `env.example` file to reference.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Contributing
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+We welcome contributions to the Real Time Chat App. If you have suggestions or encounter issues, please open an issue first to discuss your ideas or the problems you've found. 
 
-## Learn More
+## License
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The Real Time Chat App is open-sourced software licensed under the [MIT License](https://github.com/mritunjayupadhyay/chat-app-frontend/blob/main/LICENSE).
